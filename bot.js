@@ -1,4 +1,5 @@
-const { Telegraf } = require("telegraf");
+const { Telegraf, Markup } = require("telegraf");
+require("dotenv").config();
 
 const COMMANDS = [
   {
@@ -25,6 +26,10 @@ const COMMANDS = [
     command: "now",
     description: "Current events",
   },
+  {
+    command: "add",
+    description: "Add",
+  },
   // {
   //   command: "networking",
   //   description: "Хочу нетворкать",
@@ -43,7 +48,7 @@ const getHelp = () => {
   return helpText;
 };
 
-const bot = new Telegraf("5364585070:AAHqYQ_aG_AxR3MU5SYcjP1znRsNfo6JF5o");
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.telegram.setMyCommands(COMMANDS);
 
@@ -61,7 +66,7 @@ Use the convenient menu to quickly find the information you need👇\n\n` + getH
 
 bot.help((ctx) =>
   ctx.reply(
-    `Привет, ${ctx.message.from.username}.\nВот, чем я могу помочь:\n\n/program - программа конференции\n/stop - остановить\n/help - помощь`
+    `Hi, ${ctx.message.from.username}.\nHere's how I can help:\n\n/program - conference program\n/stop - stop\n/help - Show help/main menu`
   )
 );
 bot.command("help", (ctx) => {
@@ -123,7 +128,7 @@ bot.action("back", (ctx) => {
   });
 });
 const date = new Date();
-const events = [
+const a = [
   {
     date: 23,
     startConference: "10:00",
@@ -144,8 +149,8 @@ const events = [
   },
 ];
 
-const evetnsFilter = (events) => {
-  return events.filter((el) => {
+const aaa = (dta) => {
+  return dta.filter((el) => {
     if (el.date === date.getDate()) {
       return el.date;
     }
@@ -156,7 +161,7 @@ const evetnsFilter = (events) => {
   // });
 };
 bot.command("now", (ctx) => {
-  const ab = evetnsFilter(events);
+  const ab = aaa(a);
   ctx.replyWithMarkdown(
     ab.map((el) => {
       return `${el.startConference} ${el.content}`;
@@ -188,14 +193,14 @@ const partners_array = [
   },
   {
     group: "Launch Partners",
-    name: "FLOC*",
+    name: "FLOC",
     type: "NFT Creative Agency",
     title:
-      "*FLOC* is the first to provide design strategy leadership and design services via NFT drops to crypto start-ups.",
+      "FLOC is the first to provide design strategy leadership and design services via NFT drops to crypto start-ups.",
     subtitle:
-      "*FLOC* is a professional freelancers’ decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
+      "FLOC is a professional freelancers decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
     description:
-      "*FLOC* is a professional freelancers’ decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
+      "FLOC is a professional freelancers decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
     url: "https://wearefloc.com/",
   },
   {
@@ -270,15 +275,14 @@ const partners_array = [
 ];
 
 bot.command("partners", (ctx) => {
-  // partners_array.map((e) => {
-    // ctx.replyWithMarkdown(
-//       `*${e.name}*\n\
-// ${e.title}
-// ${!e.description ? e.subtitle : e.description}\n\
-// ${e.url}`
-    // );
-  // });
-  ctx.replyWithMarkdown()
+  partners_array.map((e) => {
+    ctx.replyWithMarkdown(
+      `*${e.name}*\n\
+${e.title}\
+${!e.description ? e.subtitle : e.description}\n\
+${e.url}`
+    );
+  });
 });
 
 // Конфиг клавиатуры
@@ -925,6 +929,218 @@ bot.action("program_by_day_back", (ctx) => {
     },
   });
 });
+
+
+
+const add_program = [
+  [
+    {
+      text: "Speaker", // текст на кнопке
+      callback_data: "add_speaker", // данные для обработчика событий
+    },
+    {
+      text: "Program",
+      callback_data: "add_program",
+    },
+    {
+      text: "Partner",
+      callback_data: "add_partner",
+    },
+  ],
+  // [
+  //   {
+  //     text: "↩️Вернуться к выбору",
+  //     callback_data: "program_by_day_back",
+  //   },
+  // ],
+];
+
+bot.command("add", (ctx) => {
+  ctx.reply("What do you want to add:", {
+    reply_markup: {
+      inline_keyboard: add_program,
+    },
+  });
+});
+
+bot.action("add_speaker", (ctx) => {
+  ctx.replyWithHTML(`<b>Send the full name of the speaker</b>
+<i>example: /addspeakerfullname Алексей Лубенец</i>`)
+});
+
+bot.action("add_program", (ctx) => {
+  ctx.replyWithHTML(`<b>Send the name of the program</b>
+<i>example: /addnameoftheprogram Битва языков</i>`)
+});
+
+// Add partner  ------------------------------
+
+let newPartner = {
+  // group: "",
+  name: "",
+  // type: "",
+  title: "",
+  subtitle: "",
+  description: "",
+  url: "",
+};
+
+bot.action("add_partner", (ctx) => {
+  try {
+    ctx.replyWithHTML(`<b>Enter partner name *: </b>
+Example: <i>/addpartnername "Launch Partners"</i>`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnername", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message.length < 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle:  <i>/addpartnergroup "Giant Cookie"</i>`);
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${message[1]}`,
+        // type: `${newPartner.type}`,
+        title: `${newPartner.title}`,
+        subtitle: `${newPartner.subtitle}`,
+        description: `${newPartner.description}`,
+        url: `${newPartner.url}`,
+      };
+      ctx.replyWithHTML(`✅Success!
+<b>Enter title *:</b>
+Example: <i>/addpartnertitle "Join a tribe in Barcelona that cares about freedom"</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnertitle", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message.length < 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+      Example: <i>/addpartnertitle "Join a tribe in Barcelona that cares about freedom"</i>`);
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${newPartner.name}`,
+        // type: `${newPartner.type}`,
+        title: `${message[1]}`,
+        subtitle: `${newPartner.subtitle}`,
+        description: `${newPartner.description}`,
+        url: `${newPartner.url}`,
+      };
+      console.log(newPartner);
+      ctx.replyWithHTML(`✅Success!
+<b>Enter subtitle:</b>
+Example: <i>/addpartnersubtitle "We believe technology should free humanity, not enslave it."</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnersubtitle", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      console.log(message.length);
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle:  <i>/addpartnersubtitle "We believe technology should free humanity, not enslave it. "</i>`);
+      return false;
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${newPartner.name}`,
+        // type: `${newPartner.type}`,
+        title: `${newPartner.title}`,
+        subtitle: `${message[1]}`,
+        description: `${newPartner.description}`,
+        url: `${newPartner.url}`,
+      };
+      console.log(message);
+      ctx.replyWithHTML(`✅Success!
+<b>Enter discription:</b>
+Example: <i>/addpartnerdiscription "We believe technology should free humanity, not enslave it."</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnerdiscription", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle: <i>/addpartnerdiscription "We believe technology should free humanity, not enslave it."</i>`);
+      return false;
+    }
+    if (!newPartner.description && message.length <= 1) {
+      ctx.replyWithHTML(`❌Your subtitle is empty although fill in the description.
+Exapmle: <i>/addpartnerdiscription "We believe technology should free humanity, not enslave it."</i>`);
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${newPartner.name}`,
+        // type: `${newPartner.type}`,
+        title: `${newPartner.title}`,
+        subtitle: `${newPartner.subtitle}`,
+        description: `${message[1]}`,
+        url: `${newPartner.url}`,
+      };
+      console.log(message);
+      ctx.replyWithHTML(`✅Success!
+<b>Enter url:</b>
+Example: <i>/addpartnerurl "https://telegram.org/"</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnerurl", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle: <i>/addpartnerurl "https://telegram.org/"</i>`);
+      return false;
+    }
+    newPartner = {
+      // group: `${message[1]}`,
+      name: `${newPartner.name}`,
+      // type: `${newPartner.type}`,
+      title: `${newPartner.title}`,
+      subtitle: `${newPartner.subtitle}`,
+      description: `${newPartner.description}`,
+      url: `${message[1]}`,
+    };
+    console.log(message);
+    ctx.replyWithHTML(`✅Success!
+    
+<b>Check the data:</b>
+
+<b>name</b>: <i>${newPartner.name}</i>
+
+<b>title</b>: <i>${newPartner.title}</i>
+
+<b>subtitle</b>: <i>${newPartner.subtitle}</i>
+
+<b>description</b>: <i>${newPartner.description}</i>
+
+<b>url</b>: <i>${message[1]}</i>
+`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+// -------------------------------------------------------
 
 bot.launch();
 
