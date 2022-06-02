@@ -1,26 +1,34 @@
-const { Telegraf } = require('telegraf');
-
+const { Telegraf, Markup } = require("telegraf");
+require("dotenv").config();
 
 const COMMANDS = [
   {
     command: "program",
-    description: "Показать программу конференции",
+    description: "Show conference program",
   },
   {
     command: "map",
-    description: "Показать карту помещений",
+    description: "Show map of premises",
   },
   {
     command: "speakers",
-    description: "Список спикеров",
+    description: "List of speakers",
   },
   {
     command: "partners",
-    description: "Список партнёров",
+    description: "List of partners",
   },
   {
     command: "ask",
-    description: "Ответы на частые вопросы",
+    description: "FAQ",
+  },
+  {
+    command: "now",
+    description: "Current events",
+  },
+  {
+    command: "add",
+    description: "Add",
   },
   // {
   //   command: "networking",
@@ -28,18 +36,15 @@ const COMMANDS = [
   // },
   {
     command: "help",
-    description: "Показать справку/главное меню",
+    description: "Show help/main menu",
   },
 ];
 
 module.exports = COMMANDS;
 
-
 const getHelp = () => {
-  let helpText = `*Вот, чем я могу помочь:*\n`;
-  helpText += COMMANDS.map(
-    (command) => `*/${command.command}* ${command.description}`
-  ).join(`\n`);
+  let helpText = `*Here's how I can help:*\n`;
+  helpText += COMMANDS.map((command) => `*/${command.command}* ${command.description}`).join(`\n`);
   return helpText;
 };
 
@@ -47,29 +52,36 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.telegram.setMyCommands(COMMANDS);
 
-bot.start((ctx) => ctx.replyWithMarkdown(`Привет👋 \n\n\
-Я чат-бот * IT Conf IWD*, и я создан, чтобы помочь тебе провести время на \
-конференции с пользой и удовольствием.\n\n\
-Я помогу тебе следить за расписанием, узнавать информацию о спикерах и партнерах, \
-получать уведомления от организаторов и задавать им вопросы. А еще ты сможешь \
-перейти в [чат](https://t.me/+m6OxObbnALxlYTBi) участников и принять участие в нетворке.\n\n\
-Воспользуйся удобным меню, чтобы быстро найти нужную информацию👇\n\n` + getHelp()))
+bot.start((ctx) =>
+  ctx.replyWithMarkdown(
+    `Hi👋 \n\n\
+I'm a chatbot *Barcelona IT Conf* and I'm here to help you spend time on \
+conferences with benefit and pleasure.\n\n\
+I will help you keep track of the schedule, find out information about speakers and partners,\
+receive notifications from the organizers and ask them questions. \n\n\
+Use the convenient menu to quickly find the information you need👇\n\n` + getHelp()
+  )
+);
+//А также вы можете перейти в [чат](https://t.me/+m6OxObbnALxlYTBi) участников и принять участие в нетворке.\n\n\
 
-// bot.help((ctx) => ctx.reply(`Привет, ${ctx.message.from.username}.\nВот, чем я могу помочь:\n\n/program - программа конференции\n/stop - остановить\n/help - помощь`))
+bot.help((ctx) =>
+  ctx.reply(
+    `Hi, ${ctx.message.from.username}.\nHere's how I can help:\n\n/program - conference program\n/stop - stop\n/help - Show help/main menu`
+  )
+);
 bot.command("help", (ctx) => {
   return ctx.replyWithMarkdown(getHelp());
 });
 
 bot.command("map", (ctx) => {
-  ctx.replyWithPhoto('d5du5oueb289g7p96md2.apigw.yandexcloud.net/map_rect');
-  ctx.replyWithPhoto('d5du5oueb289g7p96md2.apigw.yandexcloud.net/map_cov');
-  ctx.replyWithPhoto('d5du5oueb289g7p96md2.apigw.yandexcloud.net/map_359');
+  ctx.replyWithPhoto("d5du5oueb289g7p96md2.apigw.yandexcloud.net/map_rect");
+  ctx.replyWithPhoto("d5du5oueb289g7p96md2.apigw.yandexcloud.net/map_cov");
+  ctx.replyWithPhoto("d5du5oueb289g7p96md2.apigw.yandexcloud.net/map_359");
 });
 
-
-
 bot.command("ask", (ctx) => {
-  ctx.replyWithMarkdown('Нам часто задают эти вопросы, отвечаем!\n\n\
+  ctx.replyWithMarkdown(
+    "Нам часто задают эти вопросы, отвечаем!\n\n\
 ⚡️*Почему мне нужно посетить конференцию?*\n\
 Конференции - это неотъемлемая часть комьюнити в IT сфере. На IT Conf \
 International Women’s Day вы сможете послушать выступления топовых спикеров, \
@@ -104,108 +116,223 @@ International Women’s Day вы сможете послушать выступ�
 Достаточно просто зарегистрироваться по ссылке и в день конференции подойти к \
 стойке регистрации на входе. Не забудь взять с собой документы, удостоверяющие \
 личность ❗️\n\n\
-🙋‍♀️🙋 Не нашел подходящего ответа? *Задай свой вопрос нам! @itconf_itmo*'
-);
+🙋‍♀️🙋 Не нашел подходящего ответа? *Задай свой вопрос нам! @itconf_itmo*"
+  );
 });
+
+bot.action("back", (ctx) => {
+  ctx.reply("Выберите формат отображения:", {
+    reply_markup: {
+      inline_keyboard: program_display_type_keyboard,
+    },
+  });
+});
+const date = new Date();
+const a = [
+  {
+    date: 23,
+    startConference: "10:00",
+    finishConference: "12:00",
+    content: "Front-end development",
+  },
+  {
+    date: 24,
+    startConference: "12:00",
+    finishConference: "14:00",
+    content: "Back-end development",
+  },
+  {
+    date: 25,
+    startConference: "14:00",
+    finishConference: "16:00",
+    content: "soft-skills",
+  },
+];
+
+const aaa = (dta) => {
+  return dta.filter((el) => {
+    if (el.date === date.getDate()) {
+      return el.date;
+    }
+  });
+  // dta.filter((el) => {
+  //   return el.date === date.getDate;
+  //   // ctx.replyWithMarkdown(`${el.startConference} \n\ ${el.content}`);
+  // });
+};
+bot.command("now", (ctx) => {
+  const ab = aaa(a);
+  ctx.replyWithMarkdown(
+    ab.map((el) => {
+      return `${el.startConference} ${el.content}`;
+    })
+  );
+});
+
+const partners_array = [
+  {
+    group: "Mission",
+    name: "ETHBarcelona",
+    type: "Main",
+    title: "Explore Blockchain Technology can help build a sustainable world full of Human Potential.",
+    subtitle: "Learn from the best in the crypto scene, and put those networking skills to use.",
+    description:
+      "ETHBarcelona brings together 4000 makers, developers, and blockchain enthusiasts for a three-day conference to focus on education, innovation, art, and creating positive social impact.",
+    url: "https://ethbarcelona.com/",
+  },
+  {
+    group: "Launch Partners",
+    name: "DoinGud",
+    type: "NFT Platform",
+    title: "DoinGud is an NFT ecosystem focused on inspiring creativity and positive social impact.",
+    subtitle:
+      "We pride ourselves on accessibility and sustainability, providing next-gen Web3 tools to empower our community to create, curate, collaborate, and connect with one another in the digital space.",
+    description:
+      "We are inviting creators from around the world to be featured in our next exhibitions. We aim to empower our community of creators, curators, and collectors to use their passion to create meaningful change in the world around them — and have fun doing it!",
+    url: "https://doingud.com/",
+  },
+  {
+    group: "Launch Partners",
+    name: "FLOC",
+    type: "NFT Creative Agency",
+    title:
+      "FLOC is the first to provide design strategy leadership and design services via NFT drops to crypto start-ups.",
+    subtitle:
+      "FLOC is a professional freelancers decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
+    description:
+      "FLOC is a professional freelancers decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
+    url: "https://wearefloc.com/",
+  },
+  {
+    group: "Launch Partners",
+    name: "Polis Paral·lela Barcelona",
+    type: "",
+    title: "Join a tribe in Barcelona that cares about freedom, social good, decentralization.",
+    subtitle: "We believe technology should free humanity, not enslave it. ",
+    description: "",
+    url: "https://twitter.com/PolisParallela",
+  },
+  {
+    group: "Launch Partners",
+    name: "Shrine House",
+    type: "Decentralized record label and artist tooling platform.",
+    title: "The world's first decentralized community governed record label.",
+    subtitle: "We use decentralized lending markets to reimagine the concept of a record deal.",
+    description: "We democratize power to all token holders by giving them ownership by operating as a DAO.",
+    url: "https://shrine.house/",
+  },
+  {
+    group: "Launch Partners",
+    name: "Giant Cookie",
+    type: "Creativity driven experiential agency",
+    title: "Giant Cookie Creating new/ true/ meaningful content",
+    subtitle: "We find the most authentic voice and unifying theme to build a story and connect with an audience.",
+    description:
+      "We are a network of creators, producers, thinkers, planners, designers, artists, makers, doers, with creative and production teams and partners all over Europe, Latin America and Asia.",
+    url: "https://www.wildcookie.eu/",
+  },
+  {
+    group: "Media Partners",
+    name: "Be[in]crypto",
+    type: "Media platform",
+    title: "ETHBarcelona: la primera conferencia sobre Ethereum en España",
+    subtitle:
+      "¡Estamos más que emocionados de invitarte a ETHBarcelona, la primera conferencia de Ethereum que tendrá lugar en España, Barcelona, ​​del 6 al 8 de julio!",
+    description:
+      "ETHBarcelona tendrá lugar del 6 al 8 de julio en el emblemático Centro de Convenciones Internacionales de Barcelona – CCIB. Este evento será la primera conferencia sobre Ethereum que se celebre en España y está llamada a convertirse en un evento mundial por el enfoque que tiene sobre el impacto social y Web3.",
+    url: "https://es.beincrypto.com/ethbarcelona-la-primera-conferencia-sobre-ethereum-en-espana/",
+  },
+  {
+    group: "Media Partners",
+    name: "Eclectic Method",
+    type: "Video Remix & Musical Animations NFTs",
+    title: "Video samples combined with music.",
+    subtitle:
+      "I am Jonny Wilson (Eclectic Method) and I make remix videos or video music. I make music using video samples combined with my own music. ",
+    description: "",
+    url: "https://www.eclecticmethod.net/",
+  },
+  {
+    group: "Media Partners",
+    name: "DeFi Prime",
+    type: "Finance Media platform",
+    title: "DeFi and Open Finance",
+    subtitle:
+      "We want to shed some light on how DeFi products build and how the ecosystem evolves over time. Our blog features interviews with DeFi projects, analytics, and important news.",
+    description:
+      "Decentralized Finance (DeFi) is the movement that leverages decentralized networks to transform old financial products into trustless and transparent protocols that run without intermediaries. We are the largest and oldest media outlet, focused solely on DeFi and Open Finance space. ",
+    url: "https://defiprime.com/",
+  },
+  // {
+  //   group: 'Mission',
+  //   name: '',
+  //   type: '',
+  //   title: '',
+  //   subtitle: '',
+  //   description: '',
+  //   url: ''
+  // },
+];
 
 bot.command("partners", (ctx) => {
-  ctx.replyWithMarkdown('*Яндекс*\n*Яндекс* — IT-компания, которая разрабатывает \
-различные сервисы, чтобы помогать людям решать задачи. В основе наших сервисов \
-лежат уникальные технологии, созданные нашими инженерами. Именно они позволяют \
-нам делать то, что еще некоторое время назад люди приняли бы за волшебство.  \n\
-На карьерной секции эксперты компании расскажут про траектории профессионального \
-развития в IT и поделятся лайфхаками для успешного прохождения собеседования. \
-До встречи! \n\n\
-[Вакансии](https://yandex.ru/jobs)');
-  ctx.replyWithMarkdown('*Банк «Санкт-Петербург»*\nБанк твоего города.\n\
-Мы строим современный цифровой банк: внедряем лучшие решения, автоматизируем \
-процессы, двигаем финтех и создаем продукты, которые помогают миллионам людей \
-управлять деньгами быстрее и удобнее. \n\
-📎Приходите в hr-зону Банка «Санкт-Петербург» и узнайте финтех по-новому! Вас \
-ждет разбор резюме, информация о стажировках и вакансиях, а ещё много интересного \
-о банковском IT. \n\n\
-[Вакансии](https://spb.hh.ru/employer/3783#it)');
-  ctx.replyWithMarkdown('*Yota*\n\
-Российская телекоммуникационная компания с федеральным покрытием в сетях 2G/3G/4G, \
-которая делает услуги и сервисы такими, какими они должны быть. \n\
-📎На HR-сессии вас ждет разбор резюме и тестирование, информирование про внутренние \
-активности. \n\n\
-[Вакансии](https://spb.hh.ru/employer/105904#it)');
-  ctx.replyWithMarkdown('*PwC*  \n\
-PwC – это амбициозные масштабные проекты и динамичные интересные люди. Мы \
-предоставляем аудиторские и консультационные услуги, а также услуги в сфере IT, \
-налогообложения и юриспруденции российским и международным компаниям. \n\
-📎Ждем вас в hr-зоне PwC, где вы сможете задать все интересующие вопросы и \
-пройти викторину. А среди тех, кто оставит свое резюме, мы разыграем подарки от \
-компании. \n\n\
-[Вакансии](https://www.pwc.ru/ru/careers/technology.html)');
-  ctx.replyWithMarkdown('*Nexign*\n\
-Первый разработчик биллинга в России. Сегодня мы поставляем IT-решения для \
-операторов связи в 17 странах мира. Благодаря нашим экспертам  более 200 млн \
-человек прямо сейчас могут пользоваться телефоном, мобильным интернетом и другими \
-услугами от телеком-операторов.  \n\
-📎Приходите в hr-зону Nexign и примите участие в онлайн-викторине, по результатам \
-которой мы подарим крутой мерч компании. \n\n\
-[Вакансии](https://job.nexign.com)');
-  ctx.replyWithMarkdown('*Neoflex * \n\
-Большая команда, более 17 лет помогающая заказчикам получать устойчивые \
-конкурентные преимущества в цифровую эпоху. Мы фокусируемся на заказной \
-разработке программного обеспечения и внедрении сложных информационных систем, \
-используя передовые технологии и подходы.  \n\
-📎 Приходите в hr-зону Neoflex и получите возможность лично пообщаться с \
-представителями компании по вопросам карьеры и трудоустройства.\n\n\
-[Вакансии](https://www.neoflex.ru/about/career)');
+  partners_array.map((e) => {
+    ctx.replyWithMarkdown(
+      `*${e.name}*\n\
+${e.title}\
+${!e.description ? e.subtitle : e.description}\n\
+${e.url}`
+    );
+  });
 });
-
 
 // Конфиг клавиатуры
 const speakers_by_track_keyboard = [
   [
     {
-      text: '⚙️Backend', // текст на кнопке
-      callback_data: 'speakers_by_track_backend' // данные для обработчика событий
+      text: "⚙️Backend", // текст на кнопке
+      callback_data: "speakers_by_track_backend", // данные для обработчика событий
     },
     {
-      text: '🖥Frontend',
-      callback_data: 'speakers_by_track_frontend'
+      text: "🖥Frontend",
+      callback_data: "speakers_by_track_frontend",
     },
     {
-      text: '🤖ML',
-      callback_data: 'speakers_by_track_ml'
-    }
+      text: "🤖ML",
+      callback_data: "speakers_by_track_ml",
+    },
   ],
   [
     {
-      text: '📱Mobile',
-      callback_data: 'speakers_by_track_mobile'
+      text: "📱Mobile",
+      callback_data: "speakers_by_track_mobile",
     },
     {
-      text: '🤝Soft Skills',
-      callback_data: 'speakers_by_track_soft'
-    }
+      text: "🤝Soft Skills",
+      callback_data: "speakers_by_track_soft",
+    },
   ],
   [
     {
-      text: '🚀Startup',
-      callback_data: 'speakers_by_track_startup'
+      text: "🚀Startup",
+      callback_data: "speakers_by_track_startup",
     },
     {
-      text: '💼Career',
-      callback_data: 'speakers_by_track_career'
-    }
-  ]
+      text: "💼Career",
+      callback_data: "speakers_by_track_career",
+    },
+  ],
 ];
 bot.command("speakers", (ctx) => {
-    ctx.reply("Выберите трек:", {
-        reply_markup: {
-            inline_keyboard: speakers_by_track_keyboard
-        }
-    });
+  ctx.reply("Выберите трек:", {
+    reply_markup: {
+      inline_keyboard: speakers_by_track_keyboard,
+    },
+  });
 });
 
-bot.action('speakers_by_track_backend', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*⚙️Backend*\n\n\
+bot.action("speakers_by_track_backend", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*⚙️Backend*\n\n\
 🔹*Маргарита Андриасян*\n\
 Ведущий разработчик мобильного приложения Simple Home, ЛИИС. Более 2 лет пишу на \
 React Native. \n\
@@ -232,13 +359,13 @@ React Native. \n\
 🔹*Сергей Владимиров*  \n\
 Ведущий разработчик, Яндекс \n\
 В IT более 25 лет. От backend-а до frontend-а на самых разных языках и платформах. \
-Также преподаю курс по криптографии и защите информации.'
-    );
-})
+Также преподаю курс по криптографии и защите информации."
+  );
+});
 
-bot.action('speakers_by_track_frontend', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*🖥Frontend*\n\n\
+bot.action("speakers_by_track_frontend", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*🖥Frontend*\n\n\
 🔹*Лена Райан*\n\
 Frontend-разработчица, X5 Group\n\
 Делаю фронтенд, выступаю с докладами, пытаюсь совместить кучу проектов и не выгореть. Борюсь за вёрстку кнопок кнопками. \
@@ -248,13 +375,13 @@ Frontend-разработчица, X5 Group\n\
 Руководитель направления Инклюзия в Яндексе\n\
 Член Strategic Leader in Accessibility Initiative в IAAP, автор гайдлайна по цифровой доступности Сбербанка, автор \
 образовательного курса по цифровой доступности (accessibilityunity.com), веду телеграмм-канал об инклюзивном дизайне  «Не исключение».\n\
-@neiskluchenie'
-    );
-})
+@neiskluchenie"
+  );
+});
 
-bot.action('speakers_by_track_ml', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*🤖ML*\n\n\
+bot.action("speakers_by_track_ml", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*🤖ML*\n\n\
 🔹*Ксения Бурая*\n\
 Аспирантка ИТМО, ML Engineer Yandex.Maps\n\
 Учусь в ИТМО и пишу диссертацию о том, как сделать генерацию макияжа на фото. А ещё придумываю, как улучшать качество извлечения \
@@ -263,13 +390,13 @@ bot.action('speakers_by_track_ml', (ctx) => {
 Архитектор машинного обучения, Yota\n\
 За семилетний опыт работы успел поучаствовать в различных проектах: от научных \
 исследований по работе мозга до масштабного проекта по цифровой трансформации \
-«Газпром Нефть». А ещё я преподаю в СПбПУ им. Петра Великого.'
-    );
-})
+«Газпром Нефть». А ещё я преподаю в СПбПУ им. Петра Великого."
+  );
+});
 
-bot.action('speakers_by_track_mobile', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*📱Mobile*\n\n\
+bot.action("speakers_by_track_mobile", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*📱Mobile*\n\n\
 🔹*Екатерина Батеева*\n\
 iOS разработчик, Авито\n\
 В IT я работаю уже 10 лет. Раньше запускала курсы по тестированию и разработке и была лектором, а сейчас занимаюсь обучением как \
@@ -282,13 +409,13 @@ iOS разработчик, Авито\n\
 🔹 *​​Редникина Дарья*  \n\
 iOS-разработчик, Яндекс Маркет  \n\
 Работаю над iOS-приложением Яндекс Маркет уже год. Занимаюсь улучшением качества \
-кода, имею большой опыт в написании UI-тестов. А в свободное время учу немецкий и пью кофе.'
-    );
-})
+кода, имею большой опыт в написании UI-тестов. А в свободное время учу немецкий и пью кофе."
+  );
+});
 
-bot.action('speakers_by_track_soft', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*🤝Soft Skills*\n\n\
+bot.action("speakers_by_track_soft", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*🤝Soft Skills*\n\n\
 🔹*Анастасия Заречнева*\n\
 QA engineer, Semrush\n\
 Я соорганизаторка сообщества QA sisters, комьюнити лидер Women in tech Russia в Питере, член программного комитета Podlodka QA Crew. \
@@ -316,14 +443,14 @@ QA engineer, Semrush\n\
 🔹*Юлия Коблова*\n\
 QA Director, Банк «Санкт-Петербург»\n\
 В душе я «инженер-испытатель» в мире цифровых продуктов. В жизни – развиваю цифровой Банк «Санкт-Петербург», создаю успешные QA команды, \
-влияю на качество наших сервисов и обеспечиваю их надежность.'
-    );
-})
+влияю на качество наших сервисов и обеспечиваю их надежность."
+  );
+});
 
-bot.action('speakers_by_track_startup', (ctx) => {
+bot.action("speakers_by_track_startup", (ctx) => {
   // ctx.replyWithMarkdown('reply');
-    ctx.replyWithMarkdown(
-      '*🚀Startup*\n\n\
+  ctx.replyWithMarkdown(
+    "*🚀Startup*\n\n\
 🔹*Александр Головатый*\n\
 CEO, founder, WeGoTrip\n\
 Свой первый бизнес я начал в 17 лет. Являюсь основателем WeGoTrip — маркетплейса \
@@ -343,12 +470,13 @@ CEO, founder, WeGoTrip\n\
 CEO, Geek Teachers\n\
 Создала стартап Geek Teachers, входящий в список HundrED, и запустила социальное \
 движение Сменка. С командой проводим образовательные фестивали, ремонтируем \
-школы и снимаем об этом шоу. В 2020 выиграла премию _Young Female Entrepreneur_. \n[@geek_teachers](Telegram)');
-})
+школы и снимаем об этом шоу. В 2020 выиграла премию _Young Female Entrepreneur_. \n[@geek_teachers](Telegram)"
+  );
+});
 
-bot.action('speakers_by_track_career', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*💼Career*\n\n\
+bot.action("speakers_by_track_career", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*💼Career*\n\n\
 🔹*Наталья Исаева* \n\
 Vice President в международном банке \n\
 Работала руководителем проектов и IT-консультантом в компаниях из Fortune 500. \
@@ -373,108 +501,136 @@ Co-founder, MetaLabs \n\
 Software engineer, Google \n\
 Я работаю в компании Google и живу в Лондоне чуть более двух лет. Моя команда \
 занимается производительностью Google app - приложения, установленного практически \
-на каждом Android смартфоне.'
-    );
-})
-
+на каждом Android смартфоне."
+  );
+});
 
 // Конфиг клавиатуры
 const program_display_type_keyboard = [
   [
     {
-      text: '📊По треку', // текст на кнопке
-      callback_data: 'by_track' // данные для обработчика событий
+      text: "📊По треку", // текст на кнопке
+      callback_data: "by_track", // данные для обработчика событий
     },
     {
-      text: '📅По дате',
-      callback_data: 'by_date'
-    }
-  ]
+      text: "📅По дате",
+      callback_data: "by_date",
+    },
+  ],
 ];
 bot.command("program", (ctx) => {
   ctx.reply("Выберите формат отображения:", {
-        reply_markup: {
-            inline_keyboard: program_display_type_keyboard
-        }
+    reply_markup: {
+      inline_keyboard: program_display_type_keyboard,
+    },
   });
 });
-
 
 // Конфиг клавиатуры
 const program_by_track_keyboard = [
   [
     {
-      text: '⚙️Backend', // текст на кнопке
-      callback_data: 'program_by_track_backend' // данные для обработчика событий
+      text: "⚙️Backend", // текст на кнопке
+      callback_data: "program_by_track_backend", // данные для обработчика событий
     },
     {
-      text: '🖥Frontend',
-      callback_data: 'program_by_track_frontend'
+      text: "🖥Frontend",
+      callback_data: "program_by_track_frontend",
     },
     {
-      text: '🤖ML',
-      callback_data: 'program_by_track_ml'
-    }
+      text: "🤖ML",
+      callback_data: "program_by_track_ml",
+    },
   ],
   [
     {
-      text: '📱Mobile',
-      callback_data: 'program_by_track_mobile'
+      text: "📱Mobile",
+      callback_data: "program_by_track_mobile",
     },
     {
-      text: '🤝Soft Skills',
-      callback_data: 'program_by_track_soft'
-    }
+      text: "🤝Soft Skills",
+      callback_data: "program_by_track_soft",
+    },
   ],
   [
     {
-      text: '🚀Startup',
-      callback_data: 'program_by_track_startup'
+      text: "🚀Startup",
+      callback_data: "program_by_track_startup",
     },
     {
-      text: '💼Career',
-      callback_data: 'program_by_track_career'
-    }
+      text: "💼Career",
+      callback_data: "program_by_track_career",
+    },
   ],
   [
     {
-      text: '↩️Вернуться к выбору',
-      callback_data: 'program_by_track_back'
-    }
-  ]
+      text: "↩️Вернуться к выбору",
+      callback_data: "program_by_track_back",
+    },
+  ],
 ];
-bot.action('by_track', (ctx) => {
-    ctx.reply("Выберите трек:", {
-        reply_markup: {
-          resize_keyboard: true,
-          inline_keyboard: program_by_track_keyboard
-        }
+bot.action("by_track", (ctx) => {
+  ctx.reply("Выберите трек:", {
+    reply_markup: {
+      resize_keyboard: true,
+      inline_keyboard: program_by_track_keyboard,
+    },
   });
-})
+});
 
-bot.action('program_by_track_backend', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*⚙️Backend*\n\n\
-*15 апреля:* \n\
-🔹*12:20* Сессия "Умный дом, как это работает?" \n\
-🗣Маргарита Андриасян, ЛИИС \n\
-📍Конференц зал коворкинга \n\n\
-🔹*14:00* Дискуссия "Битва языков" \n\
-🗣Владимир Максимук, Selectel и Сергей Владимиров, Яндекс \n\
-📍Амфитеатр ректорского холла \n\n\
-🔹*14:50* Сессия "Как стать middle разработчиком?" \n\
-🗣Алексей Лубенец, Yota \n\
-📍VR-зона коворкинга \n\n\
-*16 апреля:* \n\
-🔹*13:00*  Сессия "Программируем железо без С или жизнь в промышленной \
-автоматике"\n\
-🗣Полина Овсянникова, Университет Аалто \n\
-📍Online'
-    );
-})
-bot.action('program_by_track_frontend', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*🖥Frontend*\n\n\
+const events_program = {
+  backend: [
+    {
+      date: "25",
+      mounth: "Май",
+      time: "12:20",
+      eventsTitle: 'Сессия "Умный дом, как это работает?"',
+      speaker: "Маргарита Андриасян, ЛИИС",
+      room: "Конференц зал коворкинга",
+    },
+    {
+      date: "25",
+      mounth: "Май",
+      time: "14:00",
+      eventsTitle: 'Дискуссия "Битва языков"',
+      speaker: "Владимир Максимук, Selectel и Сергей Владимиров, Яндекс",
+      room: "Амфитеатр ректорского холла",
+    },
+    {
+      date: "25",
+      mounth: "Май",
+      time: "14:50",
+      eventsTitle: 'Сессия "Как стать middle разработчиком?"',
+      speaker: "Алексей Лубенец, Yota",
+      room: "VR-зона коворкинга",
+    },
+    {
+      date: "26",
+      mounth: "Май",
+      time: "13:00",
+      eventsTitle: 'Сессия "Программируем железо без С или жизнь в промышленной автоматике"',
+      speaker: "Полина Овсянникова, Университет Аалто",
+      room: "Online",
+    },
+  ],
+};
+
+bot.action("program_by_track_backend", (ctx) => {
+  return (
+    "backend" &&
+    events_program.backend.map((e) => {
+      ctx.replyWithMarkdown(
+        `${e.date}-${e.mounth}:
+  🔹${e.time} ${e.eventsTitle}
+  🗣${e.speaker}
+  📍${e.room}`
+      );
+    })
+  );
+});
+bot.action("program_by_track_frontend", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*🖥Frontend*\n\n\
 *15 апреля:* \n\
 🔹*12:20* Сессия “Vue + A11y = ?” \n\
 🗣Лена Райан, X5 Group \n\
@@ -482,12 +638,12 @@ bot.action('program_by_track_frontend', (ctx) => {
 *16 апреля:* \n\
 🔹*11:30* Сессия “Интерфейс доступный для каждого” \n\
 🗣Валерия Курмак, Яндекс \n\
-📍Online '
-    );
-})
-bot.action('program_by_track_ml', (ctx) => {
-    ctx.replyWithMarkdown(
-'*🤖ML*\n\n\
+📍Online "
+  );
+});
+bot.action("program_by_track_ml", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*🤖ML*\n\n\
 *15 апреля:* \n\
 🔹*11:30* Сессия "Цифровой макияж" \n\
 🗣Ксения Бурая, Яндекс Карты \n\
@@ -495,11 +651,11 @@ bot.action('program_by_track_ml', (ctx) => {
 🔹*15:40* Сессия «Опасности "слепого" применения продвинутой аналитики» \n\
 🗣Дмитрий Перец, Yota \n\
 📍VR-зона коворкинга '
-    );
-})
-bot.action('program_by_track_mobile', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*📱Mobile*\n\n\
+  );
+});
+bot.action("program_by_track_mobile", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*📱Mobile*\n\n\
 *15 апреля:* \n\
 🔹*15:40* Сессия "Актуальные средства разработки под IOS” \n\
 🗣Екатерина Батеева, Авито \n\
@@ -511,11 +667,11 @@ bot.action('program_by_track_mobile', (ctx) => {
 🔹*13:40* Сессия “Эволюция UI-тестов в iOS-приложении Яндекс Маркета” \n\
 🗣Дарья Редникина, iOS-разработчик, Яндекс Маркет \n\
 📍Online'
-    );
-})
-bot.action('program_by_track_soft', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*🤝Soft Skills*\n\n\
+  );
+});
+bot.action("program_by_track_soft", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*🤝Soft Skills*\n\n\
 *15 апреля:* \n\
 🔹*11:30* Сессия "Нетворкинг в IT" \n\
 🗣Анастасия Заречнева, Semrush \n\
@@ -546,11 +702,11 @@ bot.action('program_by_track_soft', (ctx) => {
 🔹*13:10* Интервью \n\
 🗣Григорий Ткаченко,  Engineering Manager, Snapchat \n\
 📍Online'
-    );
-})
-bot.action('program_by_track_startup', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*🚀Startup*\n\n\
+  );
+});
+bot.action("program_by_track_startup", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*🚀Startup*\n\n\
 *15 апреля:* \n\
 🔹*16:50* Дискуссия “Какая идея нужна рынку” \n\
 🗣Татьяна Антипова, Бизнес-инкубатор Ингрия, Юлия Корес, Sovmestno и Мария Плоткина, Geek Teachers \n\
@@ -559,11 +715,11 @@ bot.action('program_by_track_startup', (ctx) => {
 🔹*11:50* Сессия "От идеи до международного бизнеса — личный опыт предпринимателя" \n\
 🗣Александр Головатый, WeGoTrip \n\
 📍Online'
-    );
-})
-bot.action('program_by_track_career', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*💼Career*\n\n\
+  );
+});
+bot.action("program_by_track_career", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*💼Career*\n\n\
 🔹*11:30* Скрининг резюме \n\
 🗣HR-специалисты, Яндекс \n\
 📍Аудитория 359 \n\n\
@@ -595,86 +751,84 @@ bot.action('program_by_track_career', (ctx) => {
 🗣Арина Буздалова, старший научный сотрудник, Университет ИТМО, Дарья Яковлева, \
 Co-founder, MetaLabs, Наталья Глазкина, Software Engineer Google \n\
 📍Online'
-    );
-})
-bot.action('program_by_track_back', (ctx) => {
+  );
+});
+bot.action("program_by_track_back", (ctx) => {
   ctx.reply("Выберите формат отображения:", {
-        reply_markup: {
-            inline_keyboard: program_display_type_keyboard
-        }
+    reply_markup: {
+      inline_keyboard: program_display_type_keyboard,
+    },
   });
-})
+});
 
 // Конфиг клавиатуры
 const program_by_day_keyboard = [
   [
     {
-      text: '15 апреля | ИТМО', // текст на кнопке
-      callback_data: 'program_by_day_15' // данные для обработчика событий
+      text: "15 апреля | ИТМО", // текст на кнопке
+      callback_data: "program_by_day_15", // данные для обработчика событий
     },
     {
-      text: '16 апреля | Online',
-      callback_data: 'program_by_day_16'
-    }
+      text: "16 апреля | Online",
+      callback_data: "program_by_day_16",
+    },
   ],
   [
     {
-      text: '↩️Вернуться к выбору',
-      callback_data: 'program_by_day_back'
-    }
-  ]
+      text: "↩️Вернуться к выбору",
+      callback_data: "program_by_day_back",
+    },
+  ],
 ];
 
-bot.action('by_date', (ctx) => {
-    ctx.reply("Выберите день:", {
-        reply_markup: {
-            inline_keyboard: program_by_day_keyboard
-        }
+bot.action("by_date", (ctx) => {
+  ctx.reply("Выберите день:", {
+    reply_markup: {
+      inline_keyboard: program_by_day_keyboard,
+    },
   });
-})
+});
 
 const program_by_day_15_places_keyboard = [
- [
+  [
     {
-      text: 'Амфитеатр', // текст на кнопке
-      callback_data: 'by_day_15_amf' // данные для обработчика событий
+      text: "Амфитеатр", // текст на кнопке
+      callback_data: "by_day_15_amf", // данные для обработчика событий
     },
     {
-      text: 'VR-зона',
-      callback_data: 'by_day_15_vr'
-    }
+      text: "VR-зона",
+      callback_data: "by_day_15_vr",
+    },
   ],
   [
     {
-      text: 'Конференц зал',
-      callback_data: 'by_day_15_conf'
+      text: "Конференц зал",
+      callback_data: "by_day_15_conf",
     },
     {
-      text: 'Аудитория 359',
-      callback_data: 'by_day_15_359'
-    }
+      text: "Аудитория 359",
+      callback_data: "by_day_15_359",
+    },
   ],
   [
     {
-      text: '↩️Вернуться к выбору дня',
-      callback_data: 'program_by_day_15_back'
-    }
-  ]
+      text: "↩️Вернуться к выбору дня",
+      callback_data: "program_by_day_15_back",
+    },
+  ],
 ];
 
-
-
-bot.action('program_by_day_15', (ctx) => {
-    ctx.reply("Выберите площадку:", {
-        reply_markup: {
-            inline_keyboard: program_by_day_15_places_keyboard
-        }
+bot.action("program_by_day_15", (ctx) => {
+  ctx.reply("Выберите площадку:", {
+    reply_markup: {
+      inline_keyboard: program_by_day_15_places_keyboard,
+    },
   });
-})
+});
 
-bot.action('by_day_15_amf', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*Амфитеатр*\n\n\
+bot.action("by_day_15_amf", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*Амфитеатр*\n\n\
 📎11:30 Сессия *Soft Skills* "Нетворкинг в IT"  \n\
 🗣Анастасия Заречнева, Semrush \n\n\
 📎12:20 Сессия *Frontend*  “Vue + A11y = ?” \n\
@@ -690,11 +844,11 @@ bot.action('by_day_15_amf', (ctx) => {
 📎16:50 Дискуссия *Soft Skills* “Is IT just for coders?” \n\
 🗣Юлия Коблова, Банк «Санкт-Петербург», Виктория Раксина, Selectel и Антонина \
 Пучковская, Университет ИТМО'
-    );
-})
-bot.action('by_day_15_vr', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*VR-зона*\n\n\
+  );
+});
+bot.action("by_day_15_vr", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*VR-зона*\n\n\
 📎12:00 – 14:30 *HR-секция* \n\
 🗣Консультации представителей компаний и студенческие клубы \n\n\
 ☕️13:00 - 14:00 *Кофе-брейк* \n\n\
@@ -703,11 +857,11 @@ bot.action('by_day_15_vr', (ctx) => {
 📎15:40 Сессия *ML* «Опасности "слепого" применения продвинутой аналитики» \n\
 🗣Дмитрий Перец, Yota \n\n\
 ☕️16:20 - 16:50 *Кофе-брейк*'
-    );
-})
-bot.action('by_day_15_conf', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*Конференц зал*\n\n\
+  );
+});
+bot.action("by_day_15_conf", (ctx) => {
+  ctx.replyWithMarkdown(
+    '*Конференц зал*\n\n\
 📎11:30 Сессия *ML* "Цифровой макияж" \n\
 🗣Ксения Бурая, Яндекс Карты \n\n\
 📎12:20 Сессия *Backend* "Умный дом, как это работает?" \n\
@@ -720,28 +874,28 @@ bot.action('by_day_15_conf', (ctx) => {
 ☕️16:20 - 16:50 *Кофе-брейк* \n\n\
 📎17:50 Дискуссия *Startup* “Какая идея нужна рынку” \n\
 🗣Татьяна Антипова, Бизнес-инкубатор Ингрия, Юлия Корес, Sovmestno и Мария Плоткина, Geek Teachers'
-    );
-})
-bot.action('by_day_15_359', (ctx) => {
-    ctx.replyWithMarkdown(
-      '*Аудитория 359*\n\n\
+  );
+});
+bot.action("by_day_15_359", (ctx) => {
+  ctx.replyWithMarkdown(
+    "*Аудитория 359*\n\n\
 🔹*11:30* Скрининг резюме \n\
 🗣HR-специалисты, Яндекс \n\n\
 🔹*13:15* Мастер-класс «Диалог с телом» \n\
 🗣Елизавета Некрасова, Университет ИТМО \n\n\
 🔹*14:00* Мастер-класс «Диалог с телом» \n\
-🗣Елизавета Некрасова, Университет ИТМО'
-    );
-})
-bot.action('program_by_day_15_back', (ctx) => {
-    ctx.reply("Выберите день:", {
-        reply_markup: {
-            inline_keyboard: program_by_day_keyboard
-        }
+🗣Елизавета Некрасова, Университет ИТМО"
+  );
+});
+bot.action("program_by_day_15_back", (ctx) => {
+  ctx.reply("Выберите день:", {
+    reply_markup: {
+      inline_keyboard: program_by_day_keyboard,
+    },
   });
-})
+});
 
-bot.action('program_by_day_16', (ctx) => {
+bot.action("program_by_day_16", (ctx) => {
   ctx.replyWithMarkdown(
     '*Зал 1: * \n\
 📎11:00 Интервью \n\
@@ -767,24 +921,238 @@ Co-founder, MetaLabs, Наталья Глазкина, Software Engineer, Google
 📎13:40 Сессия Mobile “Эволюция UI-тестов в iOS-приложении Яндекс Маркета” \n\
 🗣Дарья Редникина, iOS-разработчик, Яндекс Маркет'
   );
-})
-bot.action('program_by_day_back', (ctx) => {
+});
+bot.action("program_by_day_back", (ctx) => {
   ctx.reply("Выберите формат отображения:", {
-        reply_markup: {
-            inline_keyboard: program_display_type_keyboard
-        }
+    reply_markup: {
+      inline_keyboard: program_display_type_keyboard,
+    },
   });
-})
+});
+
+
+
+const add_program = [
+  [
+    {
+      text: "Speaker", // текст на кнопке
+      callback_data: "add_speaker", // данные для обработчика событий
+    },
+    {
+      text: "Program",
+      callback_data: "add_program",
+    },
+    {
+      text: "Partner",
+      callback_data: "add_partner",
+    },
+  ],
+  // [
+  //   {
+  //     text: "↩️Вернуться к выбору",
+  //     callback_data: "program_by_day_back",
+  //   },
+  // ],
+];
+
+bot.command("add", (ctx) => {
+  ctx.reply("What do you want to add:", {
+    reply_markup: {
+      inline_keyboard: add_program,
+    },
+  });
+});
+
+bot.action("add_speaker", (ctx) => {
+  ctx.replyWithHTML(`<b>Send the full name of the speaker</b>
+<i>example: /addspeakerfullname Алексей Лубенец</i>`)
+});
+
+bot.action("add_program", (ctx) => {
+  ctx.replyWithHTML(`<b>Send the name of the program</b>
+<i>example: /addnameoftheprogram Битва языков</i>`)
+});
+
+// Add partner  ------------------------------
+
+let newPartner = {
+  // group: "",
+  name: "",
+  // type: "",
+  title: "",
+  subtitle: "",
+  description: "",
+  url: "",
+};
+
+bot.action("add_partner", (ctx) => {
+  try {
+    ctx.replyWithHTML(`<b>Enter partner name *: </b>
+Example: <i>/addpartnername "Launch Partners"</i>`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnername", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message.length < 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle:  <i>/addpartnergroup "Giant Cookie"</i>`);
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${message[1]}`,
+        // type: `${newPartner.type}`,
+        title: `${newPartner.title}`,
+        subtitle: `${newPartner.subtitle}`,
+        description: `${newPartner.description}`,
+        url: `${newPartner.url}`,
+      };
+      ctx.replyWithHTML(`✅Success!
+<b>Enter title *:</b>
+Example: <i>/addpartnertitle "Join a tribe in Barcelona that cares about freedom"</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnertitle", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message.length < 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+      Example: <i>/addpartnertitle "Join a tribe in Barcelona that cares about freedom"</i>`);
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${newPartner.name}`,
+        // type: `${newPartner.type}`,
+        title: `${message[1]}`,
+        subtitle: `${newPartner.subtitle}`,
+        description: `${newPartner.description}`,
+        url: `${newPartner.url}`,
+      };
+      console.log(newPartner);
+      ctx.replyWithHTML(`✅Success!
+<b>Enter subtitle:</b>
+Example: <i>/addpartnersubtitle "We believe technology should free humanity, not enslave it."</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnersubtitle", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      console.log(message.length);
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle:  <i>/addpartnersubtitle "We believe technology should free humanity, not enslave it. "</i>`);
+      return false;
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${newPartner.name}`,
+        // type: `${newPartner.type}`,
+        title: `${newPartner.title}`,
+        subtitle: `${message[1]}`,
+        description: `${newPartner.description}`,
+        url: `${newPartner.url}`,
+      };
+      console.log(message);
+      ctx.replyWithHTML(`✅Success!
+<b>Enter discription:</b>
+Example: <i>/addpartnerdiscription "We believe technology should free humanity, not enslave it."</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnerdiscription", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle: <i>/addpartnerdiscription "We believe technology should free humanity, not enslave it."</i>`);
+      return false;
+    }
+    if (!newPartner.description && message.length <= 1) {
+      ctx.replyWithHTML(`❌Your subtitle is empty although fill in the description.
+Exapmle: <i>/addpartnerdiscription "We believe technology should free humanity, not enslave it."</i>`);
+    } else {
+      newPartner = {
+        // group: `${message[1]}`,
+        name: `${newPartner.name}`,
+        // type: `${newPartner.type}`,
+        title: `${newPartner.title}`,
+        subtitle: `${newPartner.subtitle}`,
+        description: `${message[1]}`,
+        url: `${newPartner.url}`,
+      };
+      console.log(message);
+      ctx.replyWithHTML(`✅Success!
+<b>Enter url:</b>
+Example: <i>/addpartnerurl "https://telegram.org/"</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addpartnerurl", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle: <i>/addpartnerurl "https://telegram.org/"</i>`);
+      return false;
+    }
+    newPartner = {
+      // group: `${message[1]}`,
+      name: `${newPartner.name}`,
+      // type: `${newPartner.type}`,
+      title: `${newPartner.title}`,
+      subtitle: `${newPartner.subtitle}`,
+      description: `${newPartner.description}`,
+      url: `${message[1]}`,
+    };
+    console.log(message);
+    ctx.replyWithHTML(`✅Success!
+    
+<b>Check the data:</b>
+
+<b>name</b>: <i>${newPartner.name}</i>
+
+<b>title</b>: <i>${newPartner.title}</i>
+
+<b>subtitle</b>: <i>${newPartner.subtitle}</i>
+
+<b>description</b>: <i>${newPartner.description}</i>
+
+<b>url</b>: <i>${message[1]}</i>
+`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+// -------------------------------------------------------
+
+bot.launch();
 
 module.exports.handler = async function (event, context) {
-    const message = JSON.parse(event.body);
-    await bot.handleUpdate(message);
-    return {
-        statusCode: 200,
-        body: '',
-    };
+  const message = JSON.parse(event.body);
+  await bot.handleUpdate(message);
+  return {
+    statusCode: 200,
+    body: "",
+  };
 };
 
 // Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+process.once("SIGINT", () => bot.stop("SIGINT"));
+process.once("SIGTERM", () => bot.stop("SIGTERM"));
