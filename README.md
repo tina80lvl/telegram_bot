@@ -25,7 +25,14 @@
 
 Потом запустите ваш код
 
-## npm run dev
+``` npm run dev```
+
+Чтоб добавить в автозагрузку
+```
+pm2 start "npm run dev"
+pm2 save
+pm2 startup
+```
 -------------------
 ## node index
 
