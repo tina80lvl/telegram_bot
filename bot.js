@@ -20,7 +20,7 @@ const COMMANDS = [
   },
   {
     command: "add",
-    description: "Add",
+    description: "Add something to the program",
   },
   {
     command: "help",
@@ -51,9 +51,15 @@ Use the convenient menu to quickly find the information you need👇\n\n` + getH
   )
 );
 bot.help((ctx) =>
-  ctx.reply(
-    `Hi, ${ctx.message.from.username}.\nHere's how I can help:\n\n/program - conference program\n/stop - stop\n/help - Show help/main menu`
-  )
+  ctx.replyWithHTML(`Hi, ${ctx.message.from.username}
+Here's how I can help:
+
+/program - Show conference program
+/speakers - List of speakers
+/partners - List of partners
+/now - Current events
+/add - Add something to the program
+/help - Show help/main menu`)
 );
 bot.command("help", (ctx) => {
   return ctx.replyWithMarkdown(getHelp());
@@ -153,15 +159,6 @@ let partners_array = [
       "Decentralized Finance (DeFi) is the movement that leverages decentralized networks to transform old financial products into trustless and transparent protocols that run without intermediaries. We are the largest and oldest media outlet, focused solely on DeFi and Open Finance space. ",
     url: "https://defiprime.com/",
   },
-  // {
-  //   group: 'Mission',
-  //   name: '',
-  //   type: '',
-  //   title: '',
-  //   subtitle: '',
-  //   description: '',
-  //   url: ''
-  // },
 ];
 
 let speakers_array = [];
@@ -201,13 +198,52 @@ const program_by_day_keyboard = [
     },
   ],
 ];
+
+const zeroTime = (date) => {
+  if (date.toString().length == 1) {
+    return `0:${date}`;
+  } else {
+    return date;
+  }
+};
+
 bot.command("now", (ctx) => {
   try {
     if (events_program.length <= 0) {
       ctx.replyWithHTML("Porgram list is empty");
       return false;
     }
-    
+    const date = new Date();
+    const getTime = `${zeroTime(date.getHours())}:${zeroTime(date.getMinutes())}`;
+    const getDate = date.getDate();
+    const getMonth = date.getMonth();
+    console.log(getMonth);
+    const nowEvents = events_program.filter((events) => {
+      const startTime = events.time;
+      const finishTime = () => {
+        const timeArr = startTime.split(":");
+        return `${timeArr[0] * 1 + 1}:${timeArr[1]}`;
+      };
+      if (getTime >= startTime && getTime <= finishTime() && getDate == events.date && getMonth == 6) {
+        return events;
+      }
+    });
+    if (nowEvents.length <= 0) {
+      ctx.replyWithHTML(`There are currently no active events
+Dial this command /program to see when the exhibition starts`);
+      return false;
+    }
+    const events = nowEvents.map((events) => {
+      return `
+⏳ <b>${events.time}</b>
+📎 ${events.title}
+🗣 ${events.speaker}
+📍 ${events.room}`;
+    });
+    ctx.replyWithHTML(`Now:
+${events.join(`
+`)}
+  `);
   } catch (error) {
     console.error(error);
   }
@@ -247,6 +283,89 @@ ${speaker.url}`;
   }
 });
 
+bot.action("program_by_day_6", (ctx) => {
+  try {
+    if (events_program.length <= 0) {
+      ctx.reply("Schedule not ready yet");
+      return false;
+    }
+    const getEvents = events_program.filter((events) => {
+      if (events.date == 6) {
+        return events;
+      }
+    });
+
+    const events = getEvents.map((events) => {
+      if (events.date == 6) {
+        return `
+⏳ <b>${events.time}</b>
+📎 ${events.title}
+🗣 ${events.speaker}
+📍 ${events.room}`;
+      }
+    });
+    ctx.replyWithHTML(`<b>6-July</b>
+    ${events.join(`
+`)}
+  `);
+  } catch (error) {
+    console.error(error);
+  }
+});
+bot.action("program_by_day_7", (ctx) => {
+  try {
+    if (events_program.length <= 0) {
+      ctx.reply("Schedule not ready yet");
+      return false;
+    }
+    const getEvents = events_program.filter((events) => {
+      if (events.date == 7) {
+        return events;
+      }
+    });
+    const events = getEvents.map((events) => {
+      return `
+⏳ <b>${events.time}</b>
+📎 ${events.title}
+🗣 ${events.speaker}
+📍 ${events.room}`;
+    });
+    ctx.replyWithHTML(`<b>7-July</b>
+    ${events.join(`
+`)}
+  `);
+  } catch (error) {
+    console.error(error);
+  }
+});
+bot.action("program_by_day_8", (ctx) => {
+  try {
+    if (events_program.length <= 0) {
+      ctx.reply("Schedule not ready yet");
+      return false;
+    }
+    const getEvents = events_program.filter((events) => {
+      if (events.date == 8) {
+        return events;
+      }
+    });
+
+    const events = getEvents.map((events) => {
+      return `
+⏳ <b>${events.time}</b>
+📎 ${events.title}
+🗣 ${events.speaker}
+📍 ${events.room}`;
+    });
+    ctx.replyWithHTML(`<b>8-July</b>
+    ${events.join(`
+`)}
+  `);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 bot.action("program_by_all_day", (ctx) => {
   try {
     if (events_program.length <= 0) {
@@ -255,11 +374,13 @@ bot.action("program_by_all_day", (ctx) => {
     }
     const getEvents = events_program.map((events) => {
       return `
-📎 <b>${events.time}</b> ${events.title}
+<b>${events.date}-${events.month}</b>
+⏳ <b>${events.time}</b>
+📎 ${events.title}
 🗣 ${events.speaker}
 📍 ${events.room}`;
     });
-    ctx.replyWithHTML(`<b>07-06-2022</b>
+    ctx.replyWithHTML(`
       ${getEvents.join(`
 `)}
     `);
@@ -287,7 +408,7 @@ const add_program = [
 
 bot.command("add", (ctx) => {
   if (ctx.from.username !== "Nasirdin1") {
-    ctx.reply("Oh you're not an admin");
+    ctx.reply("If you want to add something to the program, please contact @Nasirdin1");
     return false;
   }
   ctx.reply("What do you want to add:", {
@@ -629,7 +750,7 @@ Example: <i>/addeventdate "23"</i>`);
         room: newEvent.room,
       };
       ctx.replyWithHTML(`✅Success!
-<b>Enter time:</b>
+<b>Enter time (GMT+2):</b>
 Example: <i>/addeventtime "14:00"</i>`);
     }
   } catch (error) {
@@ -647,7 +768,7 @@ Example: <i>/addeventtime "14:00"</i>`);
       newEvent = {
         date: newEvent.date,
         month: newEvent.month,
-        time: message[1],
+        time: `${message[1]}(GMT+2)`,
         title: newEvent.title,
         speaker: newEvent.speaker,
         room: newEvent.room,
