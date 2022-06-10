@@ -15,6 +15,10 @@ const COMMANDS = [
     description: "List of partners",
   },
   {
+    command: "sponsors",
+    description: "List of sponsors",
+  },
+  {
     command: "now",
     description: "Current events",
   },
@@ -75,6 +79,7 @@ let partners_array = [
     description:
       "ETHBarcelona brings together 4000 makers, developers, and blockchain enthusiasts for a three-day conference to focus on education, innovation, art, and creating positive social impact.",
     url: "https://ethbarcelona.com/",
+    callback_data: "partners_1",
   },
   {
     group: "Launch Partners",
@@ -86,6 +91,7 @@ let partners_array = [
     description:
       "We are inviting creators from around the world to be featured in our next exhibitions. We aim to empower our community of creators, curators, and collectors to use their passion to create meaningful change in the world around them — and have fun doing it!",
     url: "https://doingud.com/",
+    callback_data: "partners_2",
   },
   {
     group: "Launch Partners",
@@ -98,6 +104,7 @@ let partners_array = [
     description:
       "FLOC is a professional freelancers decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
     url: "https://wearefloc.com/",
+    callback_data: "partners_3",
   },
   {
     group: "Launch Partners",
@@ -107,6 +114,7 @@ let partners_array = [
     subtitle: "We believe technology should free humanity, not enslave it. ",
     description: "",
     url: "https://twitter.com/PolisParallela",
+    callback_data: "partners_4",
   },
   {
     group: "Launch Partners",
@@ -116,6 +124,7 @@ let partners_array = [
     subtitle: "We use decentralized lending markets to reimagine the concept of a record deal.",
     description: "We democratize power to all token holders by giving them ownership by operating as a DAO.",
     url: "https://shrine.house/",
+    callback_data: "partners_5",
   },
   {
     group: "Launch Partners",
@@ -126,6 +135,7 @@ let partners_array = [
     description:
       "We are a network of creators, producers, thinkers, planners, designers, artists, makers, doers, with creative and production teams and partners all over Europe, Latin America and Asia.",
     url: "https://www.wildcookie.eu/",
+    callback_data: "partners_6",
   },
   {
     group: "Media Partners",
@@ -137,6 +147,7 @@ let partners_array = [
     description:
       "ETHBarcelona tendrá lugar del 6 al 8 de julio en el emblemático Centro de Convenciones Internacionales de Barcelona – CCIB. Este evento será la primera conferencia sobre Ethereum que se celebre en España y está llamada a convertirse en un evento mundial por el enfoque que tiene sobre el impacto social y Web3.",
     url: "https://es.beincrypto.com/ethbarcelona-la-primera-conferencia-sobre-ethereum-en-espana/",
+    callback_data: "partners_7",
   },
   {
     group: "Media Partners",
@@ -147,6 +158,7 @@ let partners_array = [
       "I am Jonny Wilson (Eclectic Method) and I make remix videos or video music. I make music using video samples combined with my own music. ",
     description: "",
     url: "https://www.eclecticmethod.net/",
+    callback_data: "partners_8",
   },
   {
     group: "Media Partners",
@@ -158,20 +170,363 @@ let partners_array = [
     description:
       "Decentralized Finance (DeFi) is the movement that leverages decentralized networks to transform old financial products into trustless and transparent protocols that run without intermediaries. We are the largest and oldest media outlet, focused solely on DeFi and Open Finance space. ",
     url: "https://defiprime.com/",
+    callback_data: "partners_9",
   },
 ];
 
-let speakers_array = [];
+let sponsors_array = [
+  {
+    group: "Diamond Sponsors",
+    name: "distrikt",
+    type: "Social Media",
+    title: "Welcome to distrikt, the world's first professional social media platform built entirely on blockchain.",
+    subtitle: "distrikt is a decentralized social media network that empowers users. 100% on the blockchain.",
+    description:
+      "Our community is growing daily and publishing original content on distrikt. It’s amazing to see such a valuable community embracing distrikt’s vision!",
+    url: "https://c7fao-laaaa-aaaae-aaa4q-cai.ic0.app/",
+    callback_data: "sponsors_1",
+  },
+  {
+    group: "Diamond Sponsors",
+    name: "dCULT",
+    type: "Investment Platform",
+    title: "Investing in revolution",
+    subtitle: "Empowre and funds those investing towards our decentrolised future",
+    description:
+      "The current financial system serves to keep the people poor. CULT serves to fast forward the collapse of the old financial system, to end the tyranny of sovereign nations and central banks. ",
+    url: "https://cultdao.io/",
+    callback_data: "sponsors_2",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Zerion",
+    type: "Web3 Smart Wallet",
+    title: "Smart, Social Web3 Wallet",
+    subtitle:
+      "The first smart social wallet built for Web3. Track, trade  across 10+ networks and connect directly to  any dAPP in few taps.",
+    description:
+      "Manage your DeFi and NFT portfolios, trade across 10+ networks and connect to any decentralized application with one wallet",
+    url: "https://zerion.io/",
+    callback_data: "sponsors_3",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Moonbeam",
+    type: "Smart Contract Platform",
+    title: "The Future is Multi-Chain",
+    subtitle:
+      "Moonbeam is a new Polkadot smart contract platform that makes it easy to build natively interoperable blockchain applications",
+    description:
+      "Expand to new chains. Powered by Moonbeam, an Ethereum-compatible smart contract parachain on Polkadot.Expand to new chains. Powered by Moonbeam, an Ethereum-compatible smart contract parachain on Polkadot.",
+    url: "https://moonbeam.network/",
+    callback_data: "sponsors_4",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "CetriK",
+    type: "Blockchain Security Audit",
+    title: "Web3 Security Leaderboard",
+    subtitle:
+      "CetriK is the leading security-focused ranking platform to analyze and monitor blockchain protocols and DeFI projects",
+    description:
+      "Identify and eliminate security vulnerabilities in blockchains, smart contracts, and Web3 apps using the most rigorous and thorough cybersecurity techniques.",
+    url: "https://www.certik.com/",
+    callback_data: "sponsors_5",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Pillar Wallet",
+    type: "Web3 Smart Wallet",
+    title: "Web3 Smart Wallet",
+    subtitle:
+      "The only community-run smart wallet with single address for all chains, low-to-no fees, and in-appcurated insights.",
+    description:
+      "Pillar empowers users in the DeFi space by supporting the democratization of finance. One way this is achieved is by giving users a say in how the wallet is run through the use of governance tokens.",
+    url: "https://www.pillar.fi/",
+    callback_data: "sponsors_6",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Giveth Docs",
+    type: "Giveth Docs",
+    title: "The Future of Giving, Documented",
+    subtitle:
+      "Comprehencive documentation for Contributors and Developers to the Giveth DApps and about Giveth as an organisation",
+    description:
+      "Support and reward the funding of public goods by creating open, transparent and free access to the revolutionary funding opportunities available within the Ethereum ecosystem.",
+    url: "https://docs.giveth.io/",
+    callback_data: "sponsors_7",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "ZK Rollup DEX Protocol",
+    type: "DeGate",
+    title: "A fairly launched, Dao-centric, Zero Knowledge based trading protocol built on Ethereum.",
+    subtitle: "The ZK rollup DEX with fast speeds, low fees and maximum self-custody.",
+    description: "We built a fast, safe and reliable trading exchange for DeFi users to trade effortlessly.",
+    url: "https://www.degate.com/",
+    callback_data: "sponsors_8",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Dapp Server SDK",
+    type: "Moralis",
+    title: "Empowered Web3 Development",
+    subtitle:
+      "Moralis provides a singleworkflow for building high performance dapps. Fully compatible with your favourite web3 tools and srvices.",
+    description:
+      "Whether you are building your first blockchain project or are already a seasoned developer - Moralis will make your projects easier to build, maintain and improve.",
+    url: "https://moralis.io/",
+    callback_data: "sponsors_9",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Smart Contracts, SDK and Design System",
+    type: "Aragon",
+    title: "Integrate DAO functionality into apps",
+    subtitle: "Build your Decentralized Autonomous Organization on open-source infrastructure with governance plugins.",
+    description: "Frictionless DAO creation and governance, povered by Aragon. Changing the world starts here.",
+    url: "https://aragon.org/",
+    callback_data: "sponsors_10",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: " Decentralized Oracle Network",
+    type: "Witnet",
+    title: "Witnet connects smart contracts to the outer world.",
+    subtitle:
+      "Witnet is a next-generation decentralized oracle that leverages state-of-the-art cryptoeconomic techniques to provide smart contracts with secure data input and output.",
+    description:
+      "The Witnet network runs its own blockchain and relies on the WIT coin for incentivization of autonomous nodes that resolve data requests, agree on the results and deliver the results back to smart contracts.",
+    url: "https://witnet.io/es/",
+    callback_data: "sponsors_11",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "APWine",
+    type: "",
+    title: "Buy, Sell, Hedge and Trade Yield",
+    subtitle:
+      "Speculate on the evolution of the yield generated by different DeFi protocols. Hedge your risk on your passive revenue.",
+    description:
+      "The APWine protocol locks funds to generate interests which are tokenized as futures, enabling a DeFi user to trade unrealised yield.",
+    url: "https://www.apwine.fi/",
+    callback_data: "sponsors_12",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Certora",
+    type: "SMART CONTRACT SECURITY",
+    title: "ENSURING SMART CONTRACT SECURITY",
+    subtitle: "",
+    description:
+      "Certora’s technology helps to cover security on decentralized protocols, essentially finding vulnerabilities that are usually difficult to find in manual code reviews and audits. ",
+    url: "https://www.certora.com/",
+    callback_data: "sponsors_13",
+  },
+];
 
-bot.command("partners", (ctx) => {
-  partners_array.map((e) => {
-    ctx.replyWithMarkdown(
-      `*${e.name}*\n\
-${e.title}\
-${!e.description ? e.subtitle : e.description}\n\
-${e.url}`
-    );
+let speakers_array = [
+  {
+    group: "Speakers",
+    name: "Amir Taaki",
+    type: "",
+    title: "",
+    subtitle:
+      '"The society that separates its scholars from its warriors will have its thinking done by cowards and its fighting by fools"  (c)',
+    description: "",
+    socialUrl: "https://twitter.com/Narodism",
+    url: "http://dark.fi/",
+    callback_data: "speakers_1",
+  },
+  {
+    group: "Speakers",
+    name: "Alona Shevchenko",
+    type: "UkraineDAO",
+    title: "Co-Founder & Operational Lead of @Ukraine_DAO",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/cryptodrftng",
+    url: "https://twitter.com/Ukraine_DAO",
+    callback_data: "speakers_2",
+  },
+  {
+    group: "Speakers",
+    name: "Rahilla Zafar",
+    type: "Altered State Machine",
+    title: "Documentary producer of an upcoming NFT 🎥 | Advisor/investor in @flufworld",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/rahilla",
+    url: "https://aseelapp.com/",
+    callback_data: "speakers_3",
+  },
+  {
+    group: "Speakers",
+    name: "Sasha Shilina",
+    type: "PhD, Paradigm, Humanode",
+    title: "PhD • Researcher • Writer • Philosophy • Arts • http://defiinether.substack.com",
+    subtitle: '"I will be speaking about all things #NFTs"',
+    description: "",
+    socialUrl: "https://twitter.com/sshshln",
+    url: "https://defiinether.substack.com/",
+    callback_data: "speakers_4",
+  },
+  {
+    group: "Speakers",
+    name: "Griff Green",
+    type: "Giveth",
+    title:
+      "In love w/ @CommonsStack, @Givethio, @generalmagicio, @TECmns, @dappnode, @identhree, @0xPolygonHermez, WhiteHatGroup, DECENTRAL (Burn Camp) & @BrightIDProject",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/thegrifft",
+    url: "https://giveth.io/",
+    callback_data: "speakers_5",
+  },
+  {
+    group: "Speakers",
+    name: "Mona El Isa",
+    type: "Avantgarde Finance",
+    title: "@enzymefinance @avantgardefi @MAMA_global monaelisa.eth",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/Mona_El_Isa",
+    url: "http://www.enzyme.finance/",
+    callback_data: "speakers_6",
+  },
+  {
+    group: "Speakers",
+    name: "Camila Ramos",
+    type: "Edge & Node",
+    title: `Developer Relations Engineer 
+@edgeandnode @womenbuildweb3 @developer_dao`,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/camiinthisthang",
+    url: "https://www.youtube.com/channel/UCyEnr-lcCUavJzh0uodvG3w/videos",
+    callback_data: "speakers_7",
+  },
+  {
+    group: "Speakers",
+    name: "Scott Moore",
+    type: "Gitcoin",
+    title: `pixel art and open source enthusiast; co-founder 
+@gitcoin @kernel0x, sometimes @ensdomains
+@seedclubhq @pleasrdao; all opinions are gpt3.`,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/notscottmoore",
+    url: "https://scott.mirror.xyz/",
+    callback_data: "speakers_8",
+  },
+  {
+    group: "Speakers",
+    name: "Nader Dabit",
+    type: "The Graph Protocol",
+    title: `Developer Relations Engineer
+@edgeandnode @graphprotocol | founder
+@developer_dao | building web3 | 🧪 @arweaveteam`,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/dabit3",
+    url: "https://www.youtube.com/c/naderdabit",
+    callback_data: "speakers_9",
+  },
+  {
+    group: "Speakers",
+    name: "Simona Pop",
+    type: "Gitcoin & Status.im",
+    title: `Balance in all things. DAO Engagement strategy
+@gitcoin | @schellingpoint_ ✨ | Community strategy
+@ethstatus | @ethBounties | @0xliscon (not ETHLisbon) orga`,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/Sim_Pop",
+    url: "https://status.im/",
+    callback_data: "speakers_10",
+  },
+  {
+    group: "Speakers",
+    name: "Clara Pardo",
+    type: "dOrg",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "",
+    url: "",
+    callback_data: "speakers_11",
+  },
+  {
+    group: "Speakers",
+    name: "Evin McMullen",
+    type: "Disco",
+    title: "CEO @discoxyz 🪩💊 get discopilled, anon | Making Web3 Fun for Everyone with DIDs + VCs",
+    subtitle: "",
+    description: "",
+    socialUrl: "",
+    url: "",
+    callback_data: "speakers_12",
+  },
+];
+
+const partners_keyboard = partners_array.map((partner) => {
+  const keyboard = [
+    {
+      text: partner.name,
+      callback_data: partner.callback_data,
+    },
+  ];
+  return keyboard;
+});
+
+bot.command("partners", async (ctx) => {
+  try {
+    if (!partners_array.length) {
+      ctx.replyWithHTML("Partners list is empty");
+      return false;
+    }
+    ctx.reply("Partners :                                          .", {
+      reply_markup: {
+        inline_keyboard: partners_keyboard,
+      },
+    });
+    await ctx.deleteMessage(ctx.update.message.message_id);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.action(
+  partners_array.map((partner) => {
+    return partner.callback_data;
+  }),
+  async (ctx) => {
+    const callback_query_data = ctx.update.callback_query.data;
+    const partners = partners_array.filter((partner) => {
+      return partner.callback_data === callback_query_data;
+    });
+    partners.map((e) => {
+      ctx.replyWithHTML(
+        `
+${e.name}
+${e.title}
+${!e.description ? e.subtitle : e.description}
+${e.url}`,
+        Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_partners")]])
+      );
+    });
+    await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+  }
+);
+
+bot.action("back_to_partners", async (ctx) => {
+  ctx.reply("Partners :                                          .", {
+    reply_markup: {
+      inline_keyboard: partners_keyboard,
+    },
   });
+  await ctx.deleteMessage(ctx.update.callback_query.message.message_id);
 });
 
 let events_program = [];
@@ -261,6 +616,66 @@ bot.command("program", (ctx) => {
   });
 });
 
+const sponsors_keyboard = sponsors_array.map((sponsor) => {
+  const keyboard = [
+    {
+      text: sponsor.name,
+      callback_data: sponsor.callback_data,
+    },
+  ];
+  return keyboard;
+});
+
+bot.command("sponsors", async (ctx) => {
+  try {
+    if (!sponsors_array.length) {
+      ctx.replyWithHTML("Sponsor list is empty");
+      return false;
+    }
+    ctx.reply("Sponsors :", {
+      reply_markup: {
+        inline_keyboard: sponsors_keyboard,
+      },
+    });
+    await ctx.deleteMessage(ctx.update.message.message_id);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.action(
+  sponsors_array.map((sponsors) => {
+    return sponsors.callback_data;
+  }),
+  async (ctx) => {
+    const callback_query_data = ctx.update.callback_query.data;
+    const sponsor = sponsors_array.filter((sponsor) => {
+      return sponsor.callback_data === callback_query_data;
+    });
+    sponsor.map((element) => {
+      ctx.replyWithHTML(
+        `
+🔹 <b>${element.name}</b>
+📎 ${element.title}
+${element.description || element.subtitleTitle}
+${element.url}
+      `,
+        Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_sponsors")]])
+      );
+    });
+    await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+  }
+);
+bot.action("back_to_sponsors", async (ctx) => {
+  ctx.reply("Sponsors :", {
+    reply_markup: {
+      inline_keyboard: sponsors_keyboard,
+      resize_keyboard: true,
+    },
+  });
+  await ctx.deleteMessage(ctx.update.callback_query.message.message_id);
+});
+
 bot.command("speakers", (ctx) => {
   try {
     if (!speakers_array.length) {
@@ -269,20 +684,23 @@ bot.command("speakers", (ctx) => {
     }
     const getSpeakers = speakers_array.map((speaker) => {
       return `
-🔹<b>${speaker.name}</b>
-${speaker.title}
-${speaker.description}
+🔹<b>${speaker.name}</b> | ${speaker.socialUrl !== "" ? `<a href='${speaker.socialUrl}'>Twitter</a>` : ""}
+${speaker.title || speaker.subtitle || speaker.type}
 ${speaker.url}`;
     });
     ctx.replyWithHTML(
-      getSpeakers.join(`
-  `)
+      getSpeakers.join(
+        `
+`
+      ),
+      {
+        disable_web_page_preview: true,
+      }
     );
   } catch (error) {
     console.error(error);
   }
 });
-
 bot.action("program_by_day_6", (ctx) => {
   try {
     if (events_program.length <= 0) {
