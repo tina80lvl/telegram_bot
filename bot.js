@@ -1233,25 +1233,28 @@ let speakers_array = [
   },
 ];
 
-const partners_keyboard = partners_array.map((partner) => {
-  const keyboard = [
-    {
-      text: partner.name,
-      callback_data: partner.callback_data,
-    },
-  ];
-  return keyboard;
-});
+const partners_keyboard = () => {
+  return partners_array.map((partner) => {
+    const keyboard = [
+      {
+        text: partner.name,
+        callback_data: partner.callback_data,
+      },
+    ];
+    return keyboard;
+  });
+};
 
 bot.command("partners", async (ctx) => {
   try {
+    updatePartners()
     if (!partners_array.length) {
       ctx.replyWithHTML("Partners list is empty");
       return false;
     }
     ctx.reply("Partners :                                          .", {
       reply_markup: {
-        inline_keyboard: partners_keyboard,
+        inline_keyboard: partners_keyboard(),
       },
     });
     await ctx.deleteMessage(ctx.update.message.message_id);
@@ -1260,33 +1263,37 @@ bot.command("partners", async (ctx) => {
   }
 });
 
-bot.action(
-  partners_array.map((partner) => {
-    return partner.callback_data;
-  }),
-  async (ctx) => {
-    const callback_query_data = ctx.update.callback_query.data;
-    const partners = partners_array.filter((partner) => {
-      return partner.callback_data === callback_query_data;
-    });
-    partners.map((e) => {
-      ctx.replyWithHTML(
-        `
-${e.name}
-${e.title}
-${!e.description ? e.subtitle : e.description}
-${e.url}`,
-        Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_partners")]])
-      );
-    });
-    await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
-  }
-);
+function updatePartners() {
+  bot.action(
+    partners_array.map((partner) => {
+      return partner.callback_data;
+    }),
+    async (ctx) => {
+      const callback_query_data = ctx.update.callback_query.data;
+      const partners = partners_array.filter((partner) => {
+        return partner.callback_data === callback_query_data;
+      });
+      partners.map((e) => {
+        ctx.replyWithHTML(
+          `
+  ${e.name}
+  ${e.title}
+  ${!e.description ? e.subtitle : e.description}
+  ${e.url}`,
+          Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_partners")]])
+        );
+      });
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+    }
+  );
+}
+
+updatePartners()
 
 bot.action("back_to_partners", async (ctx) => {
   ctx.reply("Partners :                                          .", {
     reply_markup: {
-      inline_keyboard: partners_keyboard,
+      inline_keyboard: partners_keyboard(),
     },
   });
   await ctx.deleteMessage(ctx.update.callback_query.message.message_id);
@@ -1432,7 +1439,6 @@ bot.command("now", (ctx) => {
     const getTime = `${zeroTime(date.getHours())}:${zeroTime(date.getMinutes())}`;
     const getDate = date.getDate();
     const getMonth = date.getMonth();
-    console.log(getMonth);
     const nowEvents = events_program.filter((events) => {
       const startTime = events.time;
       const finishTime = () => {
@@ -1476,25 +1482,28 @@ bot.command("program", (ctx) => {
   });
 });
 
-const sponsors_keyboard = sponsors_array.map((sponsor) => {
-  const keyboard = [
-    {
-      text: sponsor.name,
-      callback_data: sponsor.callback_data,
-    },
-  ];
-  return keyboard;
-});
+const sponsors_keyboard = () => {
+  return sponsors_array.map((sponsor) => {
+    const keyboard = [
+      {
+        text: sponsor.name,
+        callback_data: sponsor.callback_data,
+      },
+    ];
+    return keyboard;
+  });
+};
 
 bot.command("sponsors", async (ctx) => {
   try {
+    updateSponors();
     if (!sponsors_array.length) {
       ctx.replyWithHTML("Sponsor list is empty");
       return false;
     }
     ctx.reply("Sponsors :", {
       reply_markup: {
-        inline_keyboard: sponsors_keyboard,
+        inline_keyboard: sponsors_keyboard(),
       },
     });
     await ctx.deleteMessage(ctx.update.message.message_id);
@@ -1503,34 +1512,36 @@ bot.command("sponsors", async (ctx) => {
   }
 });
 
-bot.action(
-  sponsors_array.map((sponsors) => {
-    return sponsors.callback_data;
-  }),
-  async (ctx) => {
-    const callback_query_data = ctx.update.callback_query.data;
-    const sponsor = sponsors_array.filter((sponsor) => {
-      return sponsor.callback_data === callback_query_data;
-    });
-    sponsor.map((element) => {
-      ctx.replyWithHTML(
-        `
-🔹 <b>${element.name}</b>
-📎 ${element.title}
-${element.description || element.subtitleTitle}
-${element.url}
-      `,
-        Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_sponsors")]])
-      );
-    });
-    await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
-  }
-);
+function updateSponors() {
+  bot.action(
+    sponsors_array.map((sponsors) => {
+      return sponsors.callback_data;
+    }),
+    async (ctx) => {
+      const callback_query_data = ctx.update.callback_query.data;
+      const sponsor = sponsors_array.filter((sponsor) => {
+        return sponsor.callback_data === callback_query_data;
+      });
+      sponsor.map((element) => {
+        ctx.replyWithHTML(
+          `
+  🔹 <b>${element.name}</b>
+  📎 ${element.title}
+  ${element.description || element.subtitleTitle}
+  ${element.url}
+        `,
+          Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_sponsors")]])
+        );
+      });
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+    }
+  );
+}
+updateSponors();
 bot.action("back_to_sponsors", async (ctx) => {
   ctx.reply("Sponsors :", {
     reply_markup: {
-      inline_keyboard: sponsors_keyboard,
-      resize_keyboard: true,
+      inline_keyboard: sponsors_keyboard(),
     },
   });
   await ctx.deleteMessage(ctx.update.callback_query.message.message_id);
@@ -1677,9 +1688,15 @@ const add_program = [
       text: "Program",
       callback_data: "add_program",
     },
+  ],
+  [
     {
       text: "Partner",
       callback_data: "add_partner",
+    },
+    {
+      text: "Sponsors",
+      callback_data: "add_sponsor",
     },
   ],
 ];
@@ -1702,6 +1719,12 @@ bot.action("add_speaker", async (ctx) => {
 Exapmle: <i>/addspeakername "Andry Jordan"</i>`);
 });
 
+const add_callback_data = (arr) => {
+  const lasElement = arr[arr.length - 1];
+  const lasElementCallBack = lasElement.callback_data.split("_");
+  return lasElementCallBack[1] * 1 + 1;
+};
+
 bot.action("add_program", async (ctx) => {
   await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
   ctx.replyWithHTML(`<b>What month?</b>
@@ -1714,6 +1737,7 @@ let newPartner = {
   subtitle: "",
   description: "",
   url: "",
+  callback_data: "",
 };
 
 bot.action("add_partner", async (ctx) => {
@@ -1735,6 +1759,7 @@ Exapmle:  <i>/addpartnergroup "Giant Cookie"</i>`);
         subtitle: `${newPartner.subtitle}`,
         description: `${newPartner.description}`,
         url: `${newPartner.url}`,
+        callback_data: `partners_${add_callback_data(partners_array)}`,
       };
       ctx.replyWithHTML(`✅Success!
 <b>Enter title *:</b>
@@ -1758,6 +1783,7 @@ bot.command("addpartnertitle", (ctx) => {
         subtitle: `${newPartner.subtitle}`,
         description: `${newPartner.description}`,
         url: `${newPartner.url}`,
+        callback_data: `${newPartner.callback_data}`,
       };
       ctx.replyWithHTML(`✅Success!
 <b>Enter subtitle:</b>
@@ -1782,6 +1808,7 @@ Exapmle:  <i>/addpartnersubtitle "We believe technology should free humanity, no
         subtitle: `${message[1]}`,
         description: `${newPartner.description}`,
         url: `${newPartner.url}`,
+        callback_data: `${newPartner.callback_data}`,
       };
       ctx.replyWithHTML(`✅Success!
 <b>Enter discription:</b>
@@ -1810,6 +1837,7 @@ Exapmle: <i>/addpartnerdiscription "We believe technology should free humanity, 
         subtitle: `${newPartner.subtitle}`,
         description: `${message[1]}`,
         url: `${newPartner.url}`,
+        callback_data: `${newPartner.callback_data}`,
       };
       ctx.replyWithHTML(`✅Success!
 <b>Enter url:</b>
@@ -1834,6 +1862,7 @@ Exapmle: <i>/addpartnerurl "https://telegram.org/"</i>`);
       subtitle: `${newPartner.subtitle}`,
       description: `${newPartner.description}`,
       url: `${message[1]}`,
+      callback_data: `${newPartner.callback_data}`,
     };
     ctx.replyWithHTML(
       `✅Success!
@@ -1862,6 +1891,169 @@ Exapmle: <i>/addpartnerurl "https://telegram.org/"</i>`);
 bot.action("partnersave", async (ctx) => {
   await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
   partners_array = [...partners_array, newPartner];
+  ctx.replyWithHTML(`✅Success!`);
+});
+
+let newSponsor = {
+  name: "",
+  title: "",
+  subtitle: "",
+  description: "",
+  url: "",
+  callback_data: "",
+};
+
+bot.action("add_sponsor", async (ctx) => {
+  await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+  ctx.replyWithHTML(`<b>Enter sponsor name *: </b>
+Example: <i>/addsponsorname "Launch Sponsors"</i>`);
+});
+
+bot.command("addsponsorname", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message.length < 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle:  <i>/addsponsorgroup "Giant Cookie"</i>`);
+    } else {
+      newSponsor = {
+        name: `${message[1]}`,
+        title: `${newSponsor.title}`,
+        subtitle: `${newSponsor.subtitle}`,
+        description: `${newSponsor.description}`,
+        url: `${newSponsor.url}`,
+        callback_data: `sponsors_${add_callback_data(sponsors_array)}`,
+      };
+      ctx.replyWithHTML(`✅Success!
+<b>Enter title *:</b>
+Example: <i>/addsponsortitle "Join a tribe in Barcelona that cares about freedom"</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addsponsortitle", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message.length < 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+      Example: <i>/addsponsortitle "Join a tribe in Barcelona that cares about freedom"</i>`);
+    } else {
+      newSponsor = {
+        name: `${newSponsor.name}`,
+        title: `${message[1]}`,
+        subtitle: `${newSponsor.subtitle}`,
+        description: `${newSponsor.description}`,
+        url: `${newSponsor.url}`,
+        callback_data: `${newSponsor.callback_data}`,
+      };
+      ctx.replyWithHTML(`✅Success!
+<b>Enter subtitle:</b>
+Example: <i>/addsponsorsubtitle "We believe technology should free humanity, not enslave it."</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addsponsorsubtitle", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle:  <i>/addsponsorsubtitle "We believe technology should free humanity, not enslave it. "</i>`);
+      return false;
+    } else {
+      newSponsor = {
+        name: `${newSponsor.name}`,
+        title: `${newSponsor.title}`,
+        subtitle: `${message[1]}`,
+        description: `${newSponsor.description}`,
+        url: `${newSponsor.url}`,
+        callback_data: `${newSponsor.callback_data}`,
+      };
+      ctx.replyWithHTML(`✅Success!
+<b>Enter discription:</b>
+Example: <i>/addsponsordiscription "We believe technology should free humanity, not enslave it."</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addsponsordiscription", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle: <i>/addsponsordiscription "We believe technology should free humanity, not enslave it."</i>`);
+      return false;
+    }
+    if (!newSponsor.description && message.length <= 1) {
+      ctx.replyWithHTML(`❌Your subtitle is empty although fill in the description.
+Exapmle: <i>/addsponsordiscription "We believe technology should free humanity, not enslave it."</i>`);
+    } else {
+      newSponsor = {
+        name: `${newSponsor.name}`,
+        title: `${newSponsor.title}`,
+        subtitle: `${newSponsor.subtitle}`,
+        description: `${message[1]}`,
+        url: `${newSponsor.url}`,
+        callback_data: `${newSponsor.callback_data}`,
+      };
+      ctx.replyWithHTML(`✅Success!
+<b>Enter url:</b>
+Example: <i>/addsponsorurl "https://telegram.org/"</i>`);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.command("addsponsorurl", (ctx) => {
+  try {
+    const message = ctx.message.text.split('"');
+    if (message.length > 3 || message[2] !== "") {
+      ctx.replyWithHTML(`❌ Check your spelling and try again
+Exapmle: <i>/addsponsorurl "https://telegram.org/"</i>`);
+      return false;
+    }
+    newSponsor = {
+      name: `${newSponsor.name}`,
+      title: `${newSponsor.title}`,
+      subtitle: `${newSponsor.subtitle}`,
+      description: `${newSponsor.description}`,
+      url: `${message[1]}`,
+      callback_data: `${newSponsor.callback_data}`,
+    };
+    ctx.replyWithHTML(
+      `✅Success!
+    
+<b>Check the data:</b>
+
+<b>Name</b>: <i>${newSponsor.name}</i>
+
+<b>Title</b>: <i>${newSponsor.title}</i>
+
+<b>Subtitle</b>: <i>${newSponsor.subtitle}</i>
+
+<b>Description</b>: <i>${newSponsor.description}</i>
+
+<b>Url</b>: <i>${message[1]}</i>
+`,
+      Markup.inlineKeyboard([
+        [Markup.button.callback("✅ Save", "sponsorsave"), Markup.button.callback("🗑 Delete", "delete")],
+      ])
+    );
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+bot.action("sponsorsave", async (ctx) => {
+  await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+  sponsors_array = [...sponsors_array, newSponsor];
   ctx.replyWithHTML(`✅Success!`);
 });
 
@@ -1986,6 +2178,7 @@ let newEvent = {
   title: "",
   speaker: "",
   room: "",
+  callback_data: "",
 };
 
 bot.command("addeventmonth", (ctx) => {
