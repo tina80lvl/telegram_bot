@@ -19,6 +19,10 @@ const COMMANDS = [
     description: "List of sponsors",
   },
   {
+    command: "venue",
+    description: "Venue",
+  },
+  {
     command: "now",
     description: "Current events",
   },
@@ -83,6 +87,17 @@ let partners_array = [
   },
   {
     group: "Launch Partners",
+    name: "DAOist",
+    type: "",
+    title: "The era of DAOs has just begun.",
+    subtitle: "A cultural vehicle for collaborative defiance",
+    description:
+      "More than just technical and organizational revolutions, DAOs are enabling a lifestyle characterized by purpose, ownership, collaboration, and openness. The DAOist supports the cultural revolution needed to enable a world of DAOists.",
+    url: "https://www.thedaoist.co/",
+    callback_data: "partners_2",
+  },
+  {
+    group: "Launch Partners",
     name: "DoinGud",
     type: "NFT Platform",
     title: "DoinGud is an NFT ecosystem focused on inspiring creativity and positive social impact.",
@@ -91,7 +106,7 @@ let partners_array = [
     description:
       "We are inviting creators from around the world to be featured in our next exhibitions. We aim to empower our community of creators, curators, and collectors to use their passion to create meaningful change in the world around them — and have fun doing it!",
     url: "https://doingud.com/",
-    callback_data: "partners_2",
+    callback_data: "partners_3",
   },
   {
     group: "Launch Partners",
@@ -104,7 +119,7 @@ let partners_array = [
     description:
       "FLOC is a professional freelancers decentralised collective teaming up to deliver the design boost needed for crypto start-ups.",
     url: "https://wearefloc.com/",
-    callback_data: "partners_3",
+    callback_data: "partners_4",
   },
   {
     group: "Launch Partners",
@@ -114,7 +129,7 @@ let partners_array = [
     subtitle: "We believe technology should free humanity, not enslave it. ",
     description: "",
     url: "https://twitter.com/PolisParallela",
-    callback_data: "partners_4",
+    callback_data: "partners_5",
   },
   {
     group: "Launch Partners",
@@ -124,7 +139,7 @@ let partners_array = [
     subtitle: "We use decentralized lending markets to reimagine the concept of a record deal.",
     description: "We democratize power to all token holders by giving them ownership by operating as a DAO.",
     url: "https://shrine.house/",
-    callback_data: "partners_5",
+    callback_data: "partners_6",
   },
   {
     group: "Launch Partners",
@@ -135,7 +150,7 @@ let partners_array = [
     description:
       "We are a network of creators, producers, thinkers, planners, designers, artists, makers, doers, with creative and production teams and partners all over Europe, Latin America and Asia.",
     url: "https://www.wildcookie.eu/",
-    callback_data: "partners_6",
+    callback_data: "partners_7",
   },
   {
     group: "Media Partners",
@@ -147,7 +162,7 @@ let partners_array = [
     description:
       "ETHBarcelona tendrá lugar del 6 al 8 de julio en el emblemático Centro de Convenciones Internacionales de Barcelona – CCIB. Este evento será la primera conferencia sobre Ethereum que se celebre en España y está llamada a convertirse en un evento mundial por el enfoque que tiene sobre el impacto social y Web3.",
     url: "https://es.beincrypto.com/ethbarcelona-la-primera-conferencia-sobre-ethereum-en-espana/",
-    callback_data: "partners_7",
+    callback_data: "partners_8",
   },
   {
     group: "Media Partners",
@@ -158,7 +173,7 @@ let partners_array = [
       "I am Jonny Wilson (Eclectic Method) and I make remix videos or video music. I make music using video samples combined with my own music. ",
     description: "",
     url: "https://www.eclecticmethod.net/",
-    callback_data: "partners_8",
+    callback_data: "partners_9",
   },
   {
     group: "Media Partners",
@@ -170,7 +185,19 @@ let partners_array = [
     description:
       "Decentralized Finance (DeFi) is the movement that leverages decentralized networks to transform old financial products into trustless and transparent protocols that run without intermediaries. We are the largest and oldest media outlet, focused solely on DeFi and Open Finance space. ",
     url: "https://defiprime.com/",
-    callback_data: "partners_9",
+    callback_data: "partners_10",
+  },
+  {
+    group: "Media Partners",
+    name: "Ethereum",
+    type: "Ethereum",
+    title: "Ethereum is a global, decentralized platform for money and new kinds of applications.",
+    subtitle:
+      "Ethereum is a technology that lets you send cryptocurrency to anyone for a small fee. It also powers applications that everyone can use and no one can take down.",
+    description:
+      "On Ethereum, you can write code that controls money, and build applications accessible anywhere in the world.",
+    url: "https://ethereum.org/en/",
+    callback_data: "partners_11",
   },
 ];
 
@@ -198,6 +225,126 @@ let sponsors_array = [
     callback_data: "sponsors_2",
   },
   {
+    group: "Gold Sponsors",
+    name: "1inch",
+    type: "",
+    title: "One-stop access to decentralized finance",
+    subtitle: "Optimize your trades across hundreds of DEXes on multiple networks",
+    description:
+      "The 1inch Network unites decentralized protocols whose synergy enables the most lucrative, fastest and protected operations in the DeFi space.",
+    url: "https://1inch.io/",
+    callback_data: "sponsors_3",
+  },
+  {
+    group: "Gold Sponsors",
+    name: "Tenderly",
+    type: "Developer Platform",
+    title: "Tenderly | Ethereum Developer Platform",
+    subtitle: "Step up your Smart Contract development",
+    description: "Ethereum developer platform that enables you to build innovative blockchain products.",
+    url: "https://tenderly.co/",
+    callback_data: "sponsors_4",
+  },
+  {
+    group: "Gold Sponsors",
+    name: "Ripio",
+    type: "",
+    title: "Bienvenido a la nueva economía digital ",
+    subtitle: "Descubrí el futuro de la economía digital",
+    description:
+      "Comprá y vendé bitcoins y otras criptomonedas de forma rápida y simple. Somos la puerta de acceso al futuro de la economía digital.",
+    url: "https://www.ripio.com/",
+    callback_data: "sponsors_5",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "BOBA NETWORK",
+    type: "Ethereum Network",
+    title: "INTRODUCING THE ETHEREUM LAYER 2: BOBA NETWORK",
+    subtitle: "Hybrid compute, lower gas, faster transactions, secured by Ethereum.",
+    description:
+      "Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the OMG Foundation",
+    url: "https://boba.network/",
+    callback_data: "sponsors_6",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Lido",
+    type: "",
+    title: "Liquidity for staked assets",
+    subtitle: "Simplified and secure staking for digital assets.",
+    description: "Lido lets you stake tokens from many networks. Choose a network below to get started.",
+    url: "https://lido.fi/",
+    callback_data: "sponsors_7",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "SkillWallet",
+    type: "NFT ID's",
+    title: "Own your own Identity",
+    subtitle: "SkillWallets are NFT IDs that unlock the true power of Web3 Communities.",
+    description:
+      "Users can immediately prove their Skills & Reputation cross-platform and cross-community – while DAOs can track real human in- teractions directly on-chain, to evaluate the health and growth of the community.",
+    url: "https://skillwallet.id/",
+    callback_data: "sponsors_8",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "MetaMask",
+    type: "",
+    title: "A crypto wallet & gateway to blockchain apps",
+    subtitle: "Start exploring blockchain applications in seconds. Trusted by over 30 million users worldwide.",
+    description: "A safe crypto wallet for digital tokens & NFTs. Join the blockchain and DeFi world.",
+    url: "https://metamask.io/",
+    callback_data: "sponsors_9",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Neon",
+    type: "Developer Platform",
+    title: "Grow With the Best from Two Chains",
+    subtitle: "Neon is an Ethereum Virtual Machine with the scalability and liquidity of Solana",
+    description:
+      "Neon Labs’s goal is to bring both Solana’s scalability and low transaction costs to the ecosystem of Ethereum dApps, developers, and end-users",
+    url: "https://neon-labs.org/",
+    callback_data: "sponsors_10",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "QuickNode",
+    type: "Developer Platform",
+    title: "Blockchain infrastructure for everyone",
+    subtitle:
+      "We make it simple to build blockchain applications and scale up as you grow. From elastic APIs to powerful tools and analytics, all at your command through a simple control panel.",
+    description:
+      "We're a single platform for your production, staging, and testing environments. With reliability, performance and support only QuickNode can provide.",
+    url: "https://www.quicknode.com/",
+    callback_data: "sponsors_11",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Bit2Me",
+    type: "Crypto Wallet",
+    title: "Take back control of your money. The future is crypto.",
+    subtitle: "Buy cryptocurrencies with maximum security and in the easiest way",
+    description:
+      "Buy, sell, exchange, receive, store and send cryptocurrencies in an extremely easy way! Bit2Me Wallet is your best wallet for cryptocurrencies and traditional currencies.",
+    url: "https://bit2me.com/",
+    callback_data: "sponsors_12",
+  },
+  {
+    group: "Silver Sponsors",
+    name: "Status",
+    type: "Ethereum Network",
+    title: "Private, Secure Communication",
+    subtitle:
+      "Status is a secure messaging app, crypto wallet, and Web3 browser built with state of the art technology.",
+    description:
+      "Status brings the power of Ethereum into your pocket by combining a messenger, crypto-wallet, and Web3 browser.",
+    url: "https://status.im/",
+    callback_data: "sponsors_13",
+  },
+  {
     group: "Silver Sponsors",
     name: "Zerion",
     type: "Web3 Smart Wallet",
@@ -207,7 +354,7 @@ let sponsors_array = [
     description:
       "Manage your DeFi and NFT portfolios, trade across 10+ networks and connect to any decentralized application with one wallet",
     url: "https://zerion.io/",
-    callback_data: "sponsors_3",
+    callback_data: "sponsors_14",
   },
   {
     group: "Silver Sponsors",
@@ -219,7 +366,7 @@ let sponsors_array = [
     description:
       "Expand to new chains. Powered by Moonbeam, an Ethereum-compatible smart contract parachain on Polkadot.Expand to new chains. Powered by Moonbeam, an Ethereum-compatible smart contract parachain on Polkadot.",
     url: "https://moonbeam.network/",
-    callback_data: "sponsors_4",
+    callback_data: "sponsors_15",
   },
   {
     group: "Silver Sponsors",
@@ -231,7 +378,7 @@ let sponsors_array = [
     description:
       "Identify and eliminate security vulnerabilities in blockchains, smart contracts, and Web3 apps using the most rigorous and thorough cybersecurity techniques.",
     url: "https://www.certik.com/",
-    callback_data: "sponsors_5",
+    callback_data: "sponsors_16",
   },
   {
     group: "Silver Sponsors",
@@ -243,7 +390,7 @@ let sponsors_array = [
     description:
       "Pillar empowers users in the DeFi space by supporting the democratization of finance. One way this is achieved is by giving users a say in how the wallet is run through the use of governance tokens.",
     url: "https://www.pillar.fi/",
-    callback_data: "sponsors_6",
+    callback_data: "sponsors_17",
   },
   {
     group: "Silver Sponsors",
@@ -255,8 +402,107 @@ let sponsors_array = [
     description:
       "Support and reward the funding of public goods by creating open, transparent and free access to the revolutionary funding opportunities available within the Ethereum ecosystem.",
     url: "https://docs.giveth.io/",
-    callback_data: "sponsors_7",
+    callback_data: "sponsors_18",
   },
+  {
+    group: "Bronze Sponsors",
+    name: "Rungie",
+    type: "",
+    title: "Blockchain meets people",
+    subtitle:
+      "We create innovative products in the entertainment, arts, and culture sector by connecting artists, brands, franchises, and content creators with their audiences through blockchain technology.",
+    description: "",
+    url: "https://rungie.io/",
+    callback_data: "sponsors_19",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Toucan",
+    type: "",
+    title: "Carbon. On-Chained",
+    subtitle:
+      "Toucan’s infrastructure brings programmable carbon to Web3, unlocking its potential for a regenerative economy.",
+    description: "Join an ecosystem leveraging composable carbon for DeFi, NFTs, DAOs, and the metaverse.",
+    url: "https://toucan.earth/",
+    callback_data: "sponsors_20",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Attestant",
+    type: "",
+    title: "The Business Of Staking",
+    subtitle: "",
+    description:
+      "Attestant is a company dedicated to the business of staking.  It provides a non-custodial Ethereum 2 managed staking service, giving customers the ability to stake their Ether using Attestant’s infrastructure while always retaining full control of their assets.",
+    url: "https://www.attestant.io/",
+    callback_data: "sponsors_21",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Locastic",
+    type: "",
+    title: "Locastic web: an agile experiment",
+    subtitle: "",
+    description:
+      "Software design and development agency helping clients to turn ideas into amazing web and mobile apps.",
+    url: "https://locastic.com/",
+    callback_data: "sponsors_22",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "IOSG",
+    type: "",
+    title: "Research & Thesis Driven Venture Capital",
+    subtitle: "IOSG Ventures is a community-friendly and research-driven early-stage venture firm.",
+    description: "We are crypto native BUIDLer and long-term HODLer to our early-stage developers & founders.",
+    url: "https://iosg.vc/",
+    callback_data: "sponsors_23",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Cortex",
+    type: "",
+    title: "The Web3 Content Network",
+    subtitle:
+      "The Cortex App is the gateway to a new Web3 for content all built on the upcoming Cortex Network: a scalable, provable, private, user-centric and affordable network for publishing, finding and updating content.",
+    description: "",
+    url: "https://www.crtx.app/",
+    callback_data: "sponsors_24",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "HACKEN",
+    type: "",
+    title: "HACKEN CYBERSECURITY SERVICES",
+    subtitle: "Leading Security Consulting Company with an essential focus on blockchain security.",
+    description: "",
+    url: "https://hacken.io/",
+    callback_data: "sponsors_25",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "Perpetual Protocol",
+    type: "",
+    title: "Perpetual Protocol",
+    subtitle:
+      "Perpetual Protocol is an on-chain perpetual futures DEX with deep liquidity and builder-ready composability.",
+    description: "Build new protocols and projects on top of Perpetual Protocol",
+    url: "https://perp.com/",
+    callback_data: "sponsors_26",
+  },
+  {
+    group: "Bronze Sponsors",
+    name: "ShapeShift",
+    type: "",
+    title: "Explore the DeFi Universe",
+    subtitle:
+      "A free open source platform to trade, track, buy, and earn. Community-owned. Private. Non-custodial. Multi-chain. ",
+    description:
+      "Explore the Defi Universe with ShapeShift. A free open source platform to trade, track, buy, and earn. Community-owned. Private. Non-custodial. Multi-chain.",
+    url: "https://shapeshift.com/",
+    callback_data: "sponsors_27",
+  },
+  // //////////////////
   {
     group: "Bronze Sponsors",
     name: "ZK Rollup DEX Protocol",
@@ -265,7 +511,7 @@ let sponsors_array = [
     subtitle: "The ZK rollup DEX with fast speeds, low fees and maximum self-custody.",
     description: "We built a fast, safe and reliable trading exchange for DeFi users to trade effortlessly.",
     url: "https://www.degate.com/",
-    callback_data: "sponsors_8",
+    callback_data: "sponsors_29",
   },
   {
     group: "Bronze Sponsors",
@@ -277,7 +523,7 @@ let sponsors_array = [
     description:
       "Whether you are building your first blockchain project or are already a seasoned developer - Moralis will make your projects easier to build, maintain and improve.",
     url: "https://moralis.io/",
-    callback_data: "sponsors_9",
+    callback_data: "sponsors_30",
   },
   {
     group: "Bronze Sponsors",
@@ -287,7 +533,7 @@ let sponsors_array = [
     subtitle: "Build your Decentralized Autonomous Organization on open-source infrastructure with governance plugins.",
     description: "Frictionless DAO creation and governance, povered by Aragon. Changing the world starts here.",
     url: "https://aragon.org/",
-    callback_data: "sponsors_10",
+    callback_data: "sponsors_31",
   },
   {
     group: "Bronze Sponsors",
@@ -299,7 +545,7 @@ let sponsors_array = [
     description:
       "The Witnet network runs its own blockchain and relies on the WIT coin for incentivization of autonomous nodes that resolve data requests, agree on the results and deliver the results back to smart contracts.",
     url: "https://witnet.io/es/",
-    callback_data: "sponsors_11",
+    callback_data: "sponsors_32",
   },
   {
     group: "Bronze Sponsors",
@@ -311,7 +557,7 @@ let sponsors_array = [
     description:
       "The APWine protocol locks funds to generate interests which are tokenized as futures, enabling a DeFi user to trade unrealised yield.",
     url: "https://www.apwine.fi/",
-    callback_data: "sponsors_12",
+    callback_data: "sponsors_33",
   },
   {
     group: "Bronze Sponsors",
@@ -322,11 +568,528 @@ let sponsors_array = [
     description:
       "Certora’s technology helps to cover security on decentralized protocols, essentially finding vulnerabilities that are usually difficult to find in manual code reviews and audits. ",
     url: "https://www.certora.com/",
-    callback_data: "sponsors_13",
+    callback_data: "sponsors_34",
   },
 ];
 
 let speakers_array = [
+  {
+    group: "Speakers",
+    name: "Ale Borda",
+    type: "Fifty Years",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/Aleborda21",
+    url: "",
+    callback_data: "speakers_1",
+  },
+  {
+    group: "Speakers",
+    name: "Alex P",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/jabylS",
+    url: "",
+    callback_data: "speakers_2",
+  },
+  {
+    group: "Speakers",
+    name: "Alexander Guy",
+    type: "Zerion",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/AlexanderGuy19",
+    url: "",
+    callback_data: "speakers_3",
+  },
+  {
+    group: "Speakers",
+    name: "Aleksandra Smilek",
+    type: "Existential Hope",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/jed_voras",
+    url: "",
+    callback_data: "speakers_4",
+  },
+  {
+    group: "Speakers",
+    name: "Andrej Berlin",
+    type: "Deep Work",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/kischiman",
+    url: "",
+    callback_data: "speakers_5",
+  },
+  {
+    group: "Speakers",
+    name: "Andy Tudhope",
+    type: "Kernel",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/cryptowanderer",
+    url: "",
+    callback_data: "speakers_6",
+  },
+  {
+    group: "Speakers",
+    name: "Anna Kryukova",
+    type: "Celo Foundation",
+    title: ``,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/annaalexak",
+    url: "",
+    callback_data: "speakers_7",
+  },
+  {
+    group: "Speakers",
+    name: "Ashley Taylor Buck",
+    type: "ReSource",
+    title: ``,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/ashtaybuck",
+    url: "",
+    callback_data: "speakers_8",
+  },
+  {
+    group: "Speakers",
+    name: "Beth McCarthy",
+    type: "Toucan Protocol",
+    title: ``,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/ontologymachine",
+    url: "",
+    callback_data: "speakers_9",
+  },
+  {
+    group: "Speakers",
+    name: "Camila Ramos",
+    type: "Edge & Node",
+    title: ``,
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/camiinthisthang",
+    url: "",
+    callback_data: "speakers_10",
+  },
+  {
+    group: "Speakers",
+    name: "Camilla McFarland",
+    type: "Camilla McFarlandMojito",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/camillionaire_m",
+    url: "",
+    callback_data: "speakers_11",
+  },
+  {
+    group: "Speakers",
+    name: "Colin Reynolds",
+    type: "Learning Economy Foundation",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/misterreynolds",
+    url: "",
+    callback_data: "speakers_12",
+  },
+  {
+    group: "Speakers",
+    name: "Cris Carrascosa",
+    type: "ATH21",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/CarrascosaCris_",
+    url: "",
+    callback_data: "speakers_13",
+  },
+  {
+    group: "Speakers",
+    name: "Dave KrugmanALLSHIPS.co",
+    type: "ALLSHIPS.co",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/dave_krugman",
+    url: "",
+    callback_data: "speakers_14",
+  },
+  {
+    group: "Speakers",
+    name: "Diego Mazo",
+    type: "Tropykus",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/dmazorosete",
+    url: "",
+    callback_data: "speakers_15",
+  },
+  {
+    group: "Speakers",
+    name: "Dyma Budorin",
+    type: "Hacken",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/buda_kyiv",
+    url: "",
+    callback_data: "speakers_16",
+  },
+  {
+    group: "Speakers",
+    name: "Francesco Renzi",
+    type: "Superfluid",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/FrancescoRenziA",
+    url: "",
+    callback_data: "speakers_17",
+  },
+  {
+    group: "Speakers",
+    name: "Gabriel Gruber",
+    type: "Exactly Finance",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/GabrielGruber",
+    url: "",
+    callback_data: "speakers_18",
+  },
+  {
+    group: "Speakers",
+    name: "Guy Pirelli",
+    type: "Shrine House",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/iloveguypirelli",
+    url: "",
+    callback_data: "speakers_19",
+  },
+  {
+    group: "Speakers",
+    name: "Haitham Mengad",
+    type: "StemsDAO",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/haithamengad",
+    url: "",
+    callback_data: "speakers_20",
+  },
+  {
+    group: "Speakers",
+    name: "Jahed Momand",
+    type: "PrimeDAO, DAOist",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/againstutopia",
+    url: "",
+    callback_data: "speakers_21",
+  },
+  {
+    group: "Speakers",
+    name: "James Beck",
+    type: "ConsenSys (Metamask)",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/JamesJohnBeck",
+    url: "",
+    callback_data: "speakers_22",
+  },
+  {
+    group: "Speakers",
+    name: "James Farrell",
+    type: "Toucan",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/positonic",
+    url: "",
+    callback_data: "speakers_23",
+  },
+  {
+    group: "Speakers",
+    name: "Jordan Spence",
+    type: "MetaMask/ ConsenSys",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/spencecoin",
+    url: "",
+    callback_data: "speakers_24",
+  },
+  {
+    group: "Speakers",
+    name: "Jori Armbruster",
+    type: "EthicHub",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/jori_armbruster",
+    url: "",
+    callback_data: "speakers_25",
+  },
+  {
+    group: "Speakers",
+    name: "Juan SES",
+    type: "MakerDAO",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/0x7u4n",
+    url: "",
+    callback_data: "speakers_26",
+  },
+  {
+    group: "Speakers",
+    name: "Kelsie Nabben",
+    type: "RMIT University",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/kelsiemvn",
+    url: "",
+    callback_data: "speakers_27",
+  },
+  {
+    group: "Speakers",
+    name: "Lauren Luz",
+    type: "Giveth",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/karmaticacid",
+    url: "",
+    callback_data: "speakers_28",
+  },
+  {
+    group: "Speakers",
+    name: "Lefteris Karapetsas",
+    type: "Rotki",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/LefterisJP",
+    url: "",
+    callback_data: "speakers_29",
+  },
+  {
+    group: "Speakers",
+    name: "Livia deschermayer",
+    type: "Commons Stack",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/_liviade",
+    url: "",
+    callback_data: "speakers_30",
+  },
+  {
+    group: "Speakers",
+    name: "Louis Giroux",
+    type: "Twoplus",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/albiverse",
+    url: "",
+    callback_data: "speakers_31",
+  },
+  {
+    group: "Speakers",
+    name: "Maliha Abidi",
+    type: "Women Rise NFT",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/Maliha_z_Art",
+    url: "",
+    callback_data: "speakers_32",
+  },
+  {
+    group: "Speakers",
+    name: "Marc Johnson",
+    type: "Protocol Labs",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/marcjohnson518",
+    url: "",
+    callback_data: "speakers_33",
+  },
+  {
+    group: "Speakers",
+    name: "MArta Poblet",
+    type: "BlockScience & RMIT University",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/mpoblet",
+    url: "",
+    callback_data: "speakers_34",
+  },
+  {
+    group: "Speakers",
+    name: "Michelle Thuy",
+    type: "Swarm.city",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/MichellePlur",
+    url: "",
+    callback_data: "speakers_35",
+  },
+  {
+    group: "Speakers",
+    name: "Miguel Piedrafita",
+    type: "Worldcoin",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/m1guelpf",
+    url: "",
+    callback_data: "speakers_36",
+  },
+  {
+    group: "Speakers",
+    name: "Mona El Isa",
+    type: "Avantgarde Finance",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/Mona_El_Isa",
+    url: "",
+    callback_data: "speakers_37",
+  },
+  {
+    group: "Speakers",
+    name: "Naomie Abergel",
+    type: "Friday Night Dinner",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/itsmarkjohns",
+    url: "",
+    callback_data: "speakers_38",
+  },
+  {
+    group: "Speakers",
+    name: "Oriol Caba",
+    type: "Catalan DAO",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/comercallejero",
+    url: "",
+    callback_data: "speakers_39",
+  },
+  {
+    group: "Speakers",
+    name: "Patrick McCorry",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/stonecoldpat0",
+    url: "",
+    callback_data: "speakers_40",
+  },
+  {
+    group: "Speakers",
+    name: "Sergio Garcia",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/esdotge",
+    url: "",
+    callback_data: "speakers_41",
+  },
+  {
+    group: "Speakers",
+    name: "Shaoku Tien",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/tienshaoku",
+    url: "",
+    callback_data: "speakers_42",
+  },
+  {
+    group: "Speakers",
+    name: "Steph Orpilla",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/0ceans404",
+    url: "",
+    callback_data: "speakers_43",
+  },
+  {
+    group: "Speakers",
+    name: "Sunny Satva",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/sunny4earth",
+    url: "",
+    callback_data: "speakers_44",
+  },
+  {
+    group: "Speakers",
+    name: "Vittorio Rivabella",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/VittoStack",
+    url: "",
+    callback_data: "speakers_45",
+  },
+  {
+    group: "Speakers",
+    name: "Willy Ogorzaly",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/WillyOgo",
+    url: "",
+    callback_data: "speakers_46",
+  },
+  {
+    group: "Speakers",
+    name: "Griff Green",
+    type: "",
+    title: "",
+    subtitle: "",
+    description: "",
+    socialUrl: "https://twitter.com/thegriff",
+    url: "",
+    callback_data: "speakers_47",
+  },
   {
     group: "Speakers",
     name: "Amir Taaki",
@@ -337,7 +1100,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/Narodism",
     url: "http://dark.fi/",
-    callback_data: "speakers_1",
+    callback_data: "speakers_48",
   },
   {
     group: "Speakers",
@@ -348,7 +1111,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/cryptodrftng",
     url: "https://twitter.com/Ukraine_DAO",
-    callback_data: "speakers_2",
+    callback_data: "speakers_49",
   },
   {
     group: "Speakers",
@@ -359,7 +1122,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/rahilla",
     url: "https://aseelapp.com/",
-    callback_data: "speakers_3",
+    callback_data: "speakers_50",
   },
   {
     group: "Speakers",
@@ -370,7 +1133,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/sshshln",
     url: "https://defiinether.substack.com/",
-    callback_data: "speakers_4",
+    callback_data: "speakers_51",
   },
   {
     group: "Speakers",
@@ -382,7 +1145,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/thegrifft",
     url: "https://giveth.io/",
-    callback_data: "speakers_5",
+    callback_data: "speakers_52",
   },
   {
     group: "Speakers",
@@ -393,7 +1156,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/Mona_El_Isa",
     url: "http://www.enzyme.finance/",
-    callback_data: "speakers_6",
+    callback_data: "speakers_53",
   },
   {
     group: "Speakers",
@@ -405,7 +1168,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/camiinthisthang",
     url: "https://www.youtube.com/channel/UCyEnr-lcCUavJzh0uodvG3w/videos",
-    callback_data: "speakers_7",
+    callback_data: "speakers_54",
   },
   {
     group: "Speakers",
@@ -418,7 +1181,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/notscottmoore",
     url: "https://scott.mirror.xyz/",
-    callback_data: "speakers_8",
+    callback_data: "speakers_55",
   },
   {
     group: "Speakers",
@@ -431,7 +1194,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/dabit3",
     url: "https://www.youtube.com/c/naderdabit",
-    callback_data: "speakers_9",
+    callback_data: "speakers_56",
   },
   {
     group: "Speakers",
@@ -444,7 +1207,7 @@ let speakers_array = [
     description: "",
     socialUrl: "https://twitter.com/Sim_Pop",
     url: "https://status.im/",
-    callback_data: "speakers_10",
+    callback_data: "speakers_57",
   },
   {
     group: "Speakers",
@@ -455,7 +1218,7 @@ let speakers_array = [
     description: "",
     socialUrl: "",
     url: "",
-    callback_data: "speakers_11",
+    callback_data: "speakers_58",
   },
   {
     group: "Speakers",
@@ -466,7 +1229,7 @@ let speakers_array = [
     description: "",
     socialUrl: "",
     url: "",
-    callback_data: "speakers_12",
+    callback_data: "speakers_59",
   },
 ];
 
@@ -535,6 +1298,103 @@ bot.action("back_to_partners", async (ctx) => {
   });
   await ctx.deleteMessage(ctx.update.callback_query.message.message_id);
 });
+
+let venues = [
+  {
+    name: "Impact Area",
+    description: "In this area, social impact organizations meet, show their work and join the giving economy. ",
+    map: "",
+    callback_data: "venue_1"
+  },
+  {
+    name: "Coffee Shop",
+    description: "This is where you come in to drink coffee. A lot. ",
+    map: "",
+    callback_data: "venue_2"
+  },
+  {
+    name: "Co-Working Area",
+    description: "Our coworking area is an inclusive space for all attendees who are looking to create change by working together and innovating as a team.",
+    map: "",
+    callback_data: "venue_3"
+  },
+  {
+    name: "Wellness Area",
+    description: "We know that working in tech is stressful. Staying on top of your mental health is essential. Wellness area helping techs change for the better.",
+    map: "",
+    callback_data: "venue_4"
+  },
+  {
+    name: "Cultural Spaces",
+    description: "Artists and creators performing and showcasing their art. There's nothing better than freeing our minds through the power of art and creativity.",
+    map: "",
+    callback_data: "venue_5"
+  },
+  {
+    name: "Food Station",
+    description: "Food areas of ETHBarcelona are making the Earth a little greener by going plastic-free.",
+    map: "",
+    callback_data: "venue_6"
+  },
+];
+
+const venue_keyboard = venues.map((venue) => {
+  const keyboard = [
+    {
+      text: venue.name,
+      callback_data: venue.callback_data,
+    },
+  ];
+  return keyboard;
+});
+
+
+bot.command("venue", async (ctx) => {
+  try {
+    if (!venues) {
+      ctx.replyWithHTML("Venue not yet determined");
+      return false;
+    }
+    ctx.reply("Venue :                                             .", {
+      reply_markup: {
+        inline_keyboard: venue_keyboard,
+      }
+    });
+    await ctx.deleteMessage(ctx.update.message.message_id);
+  } catch (error) {
+    console.error(error);
+  }
+});
+bot.action(
+  venues.map((venue) => {
+    return venue.callback_data;
+  }),
+  async (ctx) => {
+    const callback_query_data = ctx.update.callback_query.data;
+    const venue = venues.filter((venue) => {
+      return venue.callback_data === callback_query_data;
+    });
+    venue.map((element) => {
+      ctx.replyWithHTML(
+        `📢 <b>${element.name}</b>
+✏ ${element.description}
+${element.map}`,
+        Markup.inlineKeyboard([[Markup.button.callback("↩️ Back to selection", "back_to_venue")]])
+      );
+    });
+    await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+  }
+);
+bot.action("back_to_venue", async (ctx) => {
+  ctx.reply("Venue :                                             .", {
+    reply_markup: {
+      inline_keyboard: venue_keyboard,
+      resize_keyboard: true,
+    },
+  });
+  await ctx.deleteMessage(ctx.update.callback_query.message.message_id);
+});
+
 
 let events_program = [];
 
@@ -697,12 +1557,12 @@ bot.command("speakers", (ctx) => {
       return `
 🔹<b>${speaker.name}</b> | ${speaker.socialUrl !== "" ? `<a href='${speaker.socialUrl}'>Twitter</a>` : ""}
 ${speaker.title || speaker.subtitle || speaker.type}
-${speaker.url}`;
+${speaker.url !== '' ? `${speaker.url} 
+` : speaker.url}`;
     });
     ctx.replyWithHTML(
       getSpeakers.join(
-        `
-`
+        ``
       ),
       {
         disable_web_page_preview: true,
@@ -1523,7 +2383,6 @@ module.exports.handler = async function (event, context) {
     body: "",
   };
 };
-
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
